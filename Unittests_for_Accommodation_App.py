@@ -31,7 +31,6 @@ class TestAddPerson(unittest.TestCase):
         final_person_count = len(test_instance_person_add.all_people)
         self.assertEqual(final_person_count - initial_person_count, 1, 'The person has not been added')
 
-
     def test_add_person_staff_successful(self):
         test_instance_person_add_staff = Dojo()
         initial_person_count = len(test_instance_person_add_staff.all_people)
@@ -60,6 +59,6 @@ class TestAddPerson(unittest.TestCase):
         self.assertIn(self.test_case_instance.fellows[0].office_assigned, self.test_case_instance.offices, "Person hasn't been assigned an office")
         self.assertIn(self.test_case_instance.fellows[0].livingspace_assigned, self.test_case_instance.livingspaces, "Person hasn't been assigned a living-space")
 
-    
+
 
 

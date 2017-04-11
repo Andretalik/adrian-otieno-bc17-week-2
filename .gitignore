@@ -1,2 +1,4 @@
 __pycache__/
 Dojo_allocation/
+.cache/
+.idea/

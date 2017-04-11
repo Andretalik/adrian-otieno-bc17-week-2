@@ -44,14 +44,22 @@ class Dojo(object):
                 if (len(self.offices)) == 0:
                     return "You can't be placed. No rooms exist"
                 else:
-                    person_object.office_assigned = random.choice(self.offices)
+                    chosen_office_object = random.choice(self.offices)
+                    if len(chosen_office_object.occupants) < 6:
+                        person_object.office_assigned = chosen_office_object
+                        chosen_office_object.occupants.append(person_object)
+                    else:
+                        return "Office is Full."
                 # person_object.office_assigned = random.choice(self.offices)
                 if wants_accomodation == "Y":
                     # print("room assigned") # debugging checks for correct logic
                     if (len(self.livingspaces)) == 0:
-                        return "You can't be placed. No rooms exist"
+                        return "You can't be placed. No rooms exist."
                     else:
-                        person_object.livingspace_assigned = random.choice(self.livingspaces)
+                        chosen_livingspace_object = random.choice(self.livingspaces)
+                        if len(chosen_livingspace_object.occupants) < 4:
+                            person_object.livingspace_assigned = chosen_livingspace_object
+                            chosen_livingspace_object.occupants.append(person_object)
 
             elif person_type == "staff":
                 # print("staff dont live here") # debugging checks for correct logic
@@ -61,10 +69,17 @@ class Dojo(object):
                 if (len(self.offices)) == 0:
                     return "You can't be placed. No rooms exist"
                 else:
-                    person_object.office_assigned = random.choice(self.offices)
+                    chosen_office_object = random.choice(self.offices)
+                    if len(chosen_office_object.occupants) < 6:
+                        person_object.office_assigned = chosen_office_object
+                        chosen_office_object.occupants.append(person_object)
 
             else:
                 return "Please enter the person type in the correct format"
+
+    # def print_room(self, room_name):
+
+
 
 
 

@@ -1,7 +1,8 @@
 class Room(object):
-    def __init__(self, room_type, room_name):
+    def __init__(self, room_type, room_name, occupants=[]):
         self.room_type = room_type.lower()
         self.room_name = room_name
+        self.occupants = occupants
 
 
 class Office(Room):
