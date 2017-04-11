@@ -36,29 +36,32 @@ class Dojo(object):
 
     def add_person(self, person_name, person_type, wants_accomodation="N"):
         if person_name != "":
-            if person_type == "fellow": #
+            if person_type == "fellow":  #
                 # print("a fellow") # debugging checks for correct logic
-                person_object = Fellow(person_name, person_type, wants_accomodation) # creates
+                person_object = Fellow(person_name, person_type, wants_accomodation)  # creates
                 self.all_people.append(person_object)
                 self.fellows.append(person_object)
+                if (len(self.offices)) == 0:
+                    return "You can't be placed. No rooms exist"
+                else:
+                    person_object.office_assigned = random.choice(self.offices)
                 # person_object.office_assigned = random.choice(self.offices)
                 if wants_accomodation == "Y":
                     # print("room assigned") # debugging checks for correct logic
-                    #if len(self.livingspaces) != 0:
-                    # print(len(self.livingspaces))
-                    # person_object.room_assigned = random.choice(self.livingspaces)
-                    #else:
-                        #person_object.room_assigned = "No rooms exist"
                     if (len(self.livingspaces)) == 0:
-                        person_object.room_assigned = "You can't be placed. No rooms exist"
+                        return "You can't be placed. No rooms exist"
                     else:
-                        person_object.room_assigned = random.choice(self.livingspaces)
+                        person_object.livingspace_assigned = random.choice(self.livingspaces)
 
             elif person_type == "staff":
                 # print("staff dont live here") # debugging checks for correct logic
                 person_object = Staff(person_name, person_type, wants_accomodation)
                 self.all_people.append(person_object)
                 self.staff.append(person_object)
+                if (len(self.offices)) == 0:
+                    return "You can't be placed. No rooms exist"
+                else:
+                    person_object.office_assigned = random.choice(self.offices)
 
             else:
                 return "Please enter the person type in the correct format"
