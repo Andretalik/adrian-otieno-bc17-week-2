@@ -11,38 +11,34 @@ class Dojo(object):
         self.all_people = []
         self.fellows = []
         self.staff = []
+        self.available_rooms = []
 
     def create_room(self, room_type, *args):
         if len(args) != 0:
-            # print("hello") # debugging checks for correct logic
             if room_type == "office":
-                # print("world") # debugging checks for correct logic
                 for room_name in list(args):
                     office_object = Office("office", room_name)
                     self.all_rooms.append(office_object)
                     self.offices.append(office_object)
-                    # print("office created")
             elif room_type == "livingspace":
-                # print("stuff")# debugging checks for correct logic
                 for room_name in list(args):
-                    # print("loops") # debugging checks for correct logic
                     livingspace_object = LivingSpace("livingspace", room_name)
                     self.all_rooms.append(livingspace_object)
                     self.livingspaces.append(livingspace_object)
-                    # print(len(self.livingspaces))
-                    # print("livingspaces") # debugging checks for correct logic
             else:
                 return "Please enter the room type in the correct format"
 
+
+    # def available_rooms(self, ):
+
     def add_person(self, person_name, person_type, wants_accomodation="N"):
         if person_name != "":
-            if person_type == "fellow":  #
-                # print("a fellow") # debugging checks for correct logic
+            if person_type == "fellow":
                 person_object = Fellow(person_name, person_type, wants_accomodation)  # creates
                 self.all_people.append(person_object)
                 self.fellows.append(person_object)
                 if (len(self.offices)) == 0:
-                    return "You can't be placed. No rooms exist"
+                    pass
                 else:
                     chosen_office_object = random.choice(self.offices)
                     if len(chosen_office_object.occupants) < 6:
@@ -50,11 +46,9 @@ class Dojo(object):
                         chosen_office_object.occupants.append(person_object)
                     else:
                         return "Office is Full."
-                # person_object.office_assigned = random.choice(self.offices)
                 if wants_accomodation == "Y":
-                    # print("room assigned") # debugging checks for correct logic
                     if (len(self.livingspaces)) == 0:
-                        return "You can't be placed. No rooms exist."
+                        pass
                     else:
                         chosen_livingspace_object = random.choice(self.livingspaces)
                         if len(chosen_livingspace_object.occupants) < 4:
@@ -62,12 +56,11 @@ class Dojo(object):
                             chosen_livingspace_object.occupants.append(person_object)
 
             elif person_type == "staff":
-                # print("staff dont live here") # debugging checks for correct logic
                 person_object = Staff(person_name, person_type, wants_accomodation)
                 self.all_people.append(person_object)
                 self.staff.append(person_object)
                 if (len(self.offices)) == 0:
-                    return "You can't be placed. No rooms exist"
+                    pass
                 else:
                     chosen_office_object = random.choice(self.offices)
                     if len(chosen_office_object.occupants) < 6:
@@ -78,19 +71,34 @@ class Dojo(object):
                 return "Please enter the person type in the correct format"
 
     def print_room(self, room_name):
-        i = 0                               # creation of loop condition for the loop to terminate after finishing the list of rooms
+        i = 0   # creation of termination factor for loop
         count = (len(self.all_rooms)) - 1
         while i < count:
             if self.all_rooms[i].room_name == room_name:
                 return self.all_rooms[i].occupants
 
-
-
-
-
-
-
-
-'''doug = Dojo()
-doug.create_room("livingspace", "Drangleic")
-print(doug.all_rooms[0].room_name)'''
+    def print_allocations(self, option_to_txt_file=""):
+        i = 0  # creation of termination factor for loop
+        count = (len(self.all_rooms)) - 1
+        if option_to_txt_file == "":
+            while i < count:
+                if len(self.all_rooms[i].occupants) > 0:
+                    print(self.all_rooms[i].room_name)
+                    i += 1
+                    x = 0  # creation of termination factor for loop
+                    count2 = (len(self.all_rooms)) - 1
+                    while x < count2:
+                        print(self.all_rooms[i].occupants.person_name)
+                        x += 1
+        else:
+            txt_filename = option_to_txt_file
+            output_txt = open(txt_filename, mode='w+')
+            while i < count:
+                if len(self.all_rooms[i].occupants) > 0:
+                    output_txt.write(self.all_rooms[i].room_name)
+                    i += 1
+                    x = 0  # creation of termination factor for loop
+                    count2 = (len(self.all_rooms)) - 1
+                    while x < count2:
+                        output_txt.write(self.all_rooms[i].occupants.person_name)
+                        x += 1

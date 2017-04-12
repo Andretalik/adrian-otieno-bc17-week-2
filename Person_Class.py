@@ -8,9 +8,11 @@ class Person(object):
 
 
 class Fellow(Person):
-    pass
+    def __init__(self, person_name, person_type, wants_accommodation):
+        super().__init__(person_name, person_type, wants_accommodation)
 
 
 class Staff(Person):
-    pass
+    def __init__(self, person_name, person_type, wants_accommodation):
+        super().__init__(person_name, person_type, wants_accommodation)
 

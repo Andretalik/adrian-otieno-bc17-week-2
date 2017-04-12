@@ -39,23 +39,9 @@ class TestAddPerson(unittest.TestCase):
         self.assertEqual(final_person_count - initial_person_count, 1, 'The person has not been added')
 
     def test_person_room_allocation(self):
-        #test_case_instance = Dojo()
-        # multiple_livingspace = room_instance.create_room("livingspace", "Drangleic", "Rockport", "Camden", "Halo")
         self.test_case_instance.create_room("livingspace", "Drangleic", "Rockport", "Camden", "Halo")
         self.test_case_instance.create_room("office", "Paladins")
-        # print(test_room_assigned.all_rooms[0].room_name)
-        # print(test_room_assigned.livingspaces[0].room_name)
-        # self.assertTrue(multiple_livingspace)
         self.test_case_instance.add_person("General Shephard", "fellow", "Y")
-        # print(person_instance.all_people[0].person_name)
-        # print(type(person_instance))
-        # self.assertTrue(isinstance(master_chief_fellow.room_assigned, master_chief_fellow.livingspaces), msg=
-        # self.assertIn(person_instance.room_assigned, person_instance.livingspaces, msg="Person has been assigned a room that does not exist.")
-        # print(self.test_case_instance.livingspaces[0].room_name)
-        # print(self.test_case_instance.offices[0].room_name)
-        # print(self.test_case_instance.fellows[0].person_name)
-        # print(self.test_case_instance.fellows[0].livingspace_assigned)
-        # print(self.test_case_instance.fellows[0].office_assigned)
         self.assertIn(self.test_case_instance.fellows[0].office_assigned, self.test_case_instance.offices, "Person hasn't been assigned an office")
         self.assertIn(self.test_case_instance.fellows[0].livingspace_assigned, self.test_case_instance.livingspaces, "Person hasn't been assigned a living-space")
 
@@ -71,7 +57,8 @@ class TestMembersOfRooms(unittest.TestCase):
         self.test_case_instance_members.add_person("Samus Aran", "fellow")
         self.test_case_instance_members.add_person("Christianne Ochieng", "fellow")
         self.test_case_instance_members.print_room("Paladins")
-        # print(self.test_case_instance_members.offices[0].occupants[2].person_name)
-        # print(self.test_case_instance_members.offices[0].room_name)
         self.assertIn(self.test_case_instance_members.all_rooms[0].occupants[0], self.test_case_instance_members.all_people, "Function isn't appending rooms correctly")
         self.assertIn(self.test_case_instance_members.all_rooms[0].occupants[1], self.test_case_instance_members.all_people, "Function isn't appending rooms correctly")
+
+
+    # def test_

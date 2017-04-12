@@ -8,8 +8,10 @@ class Room(object):
 
 
 class Office(Room):
-    pass
+    def __init__(self, room_type, room_name):
+        super().__init__(room_type, room_name)
 
 
 class LivingSpace(Room):
-    pass
+    def __init__(self, room_type, room_name):
+        super().__init__(room_type, room_name)
