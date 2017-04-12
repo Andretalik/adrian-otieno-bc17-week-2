@@ -17,33 +17,29 @@ class Dojo(object):
         if len(args) != 0:
             if room_type == "office":
                 for room_name in list(args):
-                    office_object = Office("office", room_name)
-                    self.all_rooms.append(office_object)
-                    self.offices.append(office_object)
+                    self.all_rooms.append(Office("office", room_name))
+                    self.offices.append(Office("office", room_name))
             elif room_type == "livingspace":
                 for room_name in list(args):
-                    livingspace_object = LivingSpace("livingspace", room_name)
-                    self.all_rooms.append(livingspace_object)
-                    self.livingspaces.append(livingspace_object)
+                    self.all_rooms.append(LivingSpace("livingspace", room_name))
+                    self.livingspaces.append(LivingSpace("livingspace", room_name))
             else:
                 return "Please enter the room type in the correct format"
-
 
     # def available_rooms(self, ):
 
     def add_person(self, person_name, person_type, wants_accomodation="N"):
         if person_name != "":
             if person_type == "fellow":
-                person_object = Fellow(person_name, person_type, wants_accomodation)  # creates
-                self.all_people.append(person_object)
-                self.fellows.append(person_object)
+                self.all_people.append(Fellow(person_name, person_type, wants_accomodation))
+                self.fellows.append(Fellow(person_name, person_type, wants_accomodation))
                 if (len(self.offices)) == 0:
                     pass
                 else:
                     chosen_office_object = random.choice(self.offices)
                     if len(chosen_office_object.occupants) < 6:
-                        person_object.office_assigned = chosen_office_object
-                        chosen_office_object.occupants.append(person_object)
+                        Fellow(person_name, person_type, wants_accomodation).office_assigned = chosen_office_object
+                        chosen_office_object.occupants.append(Fellow(person_name, person_type, wants_accomodation))
                     else:
                         return "Office is Full."
                 if wants_accomodation == "Y":
@@ -52,20 +48,19 @@ class Dojo(object):
                     else:
                         chosen_livingspace_object = random.choice(self.livingspaces)
                         if len(chosen_livingspace_object.occupants) < 4:
-                            person_object.livingspace_assigned = chosen_livingspace_object
-                            chosen_livingspace_object.occupants.append(person_object)
+                            Fellow(person_name, person_type, wants_accomodation).livingspace_assigned = chosen_livingspace_object
+                            chosen_livingspace_object.occupants.append(Fellow(person_name, person_type, wants_accomodation))
 
             elif person_type == "staff":
-                person_object = Staff(person_name, person_type, wants_accomodation)
-                self.all_people.append(person_object)
-                self.staff.append(person_object)
+                self.all_people.append(Staff(person_name, person_type, wants_accomodation))
+                self.staff.append(Staff(person_name, person_type, wants_accomodation))
                 if (len(self.offices)) == 0:
                     pass
                 else:
                     chosen_office_object = random.choice(self.offices)
                     if len(chosen_office_object.occupants) < 6:
-                        person_object.office_assigned = chosen_office_object
-                        chosen_office_object.occupants.append(person_object)
+                        Staff(person_name, person_type, wants_accomodation).office_assigned = chosen_office_object
+                        chosen_office_object.occupants.append(Staff(person_name, person_type, wants_accomodation))
 
             else:
                 return "Please enter the person type in the correct format"
