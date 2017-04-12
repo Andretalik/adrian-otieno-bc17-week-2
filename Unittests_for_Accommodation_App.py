@@ -48,17 +48,16 @@ class TestAddPerson(unittest.TestCase):
 
 class TestMembersOfRooms(unittest.TestCase):
     def setUp(self):
-        self.test_case_instance_members = Dojo()
+        self.dojo = Dojo()
+
+    def tearDown(self):
+        self.dojo = Dojo()
 
     def test_member_in_specific_rooms(self):
-        self.test_case_instance_members = Dojo()
-        self.test_case_instance_members.create_room("office", "Overwatch")
-        self.test_case_instance_members.add_person("Androxus Godslayer", "staff")
-        self.test_case_instance_members.add_person("Samus Aran", "fellow")
-        self.test_case_instance_members.add_person("Christianne Ochieng", "fellow")
-        self.test_case_instance_members.print_room("Paladins")
-        self.assertIn(self.test_case_instance_members.all_rooms[0].occupants[0], self.test_case_instance_members.all_people, "Function isn't appending rooms correctly")
-        self.assertIn(self.test_case_instance_members.all_rooms[0].occupants[1], self.test_case_instance_members.all_people, "Function isn't appending rooms correctly")
-
-
-    # def test_
+        self.dojo.create_room("office", "Overwatch")
+        self.dojo.add_person("Androxus Godslayer", "staff")
+        self.dojo.add_person("Samus Aran", "fellow")
+        self.dojo.add_person("Christianne Ochieng", "fellow")
+        self.dojo.print_room("Paladins")
+        self.assertIn(self.dojo.all_rooms[0].occupants[0], self.dojo.all_people, "Function isn't appending rooms correctly")
+        self.assertIn(self.dojo.all_rooms[0].occupants[1], self.dojo.all_people, "Function isn't appending rooms correctly")

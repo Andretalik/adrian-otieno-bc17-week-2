@@ -11,57 +11,93 @@ class Dojo(object):
         self.all_people = []
         self.fellows = []
         self.staff = []
-        self.available_rooms = []
+        self.available_offices = []
+        self.available_livingspaces = []
 
     def create_room(self, room_type, *args):
         if len(args) != 0:
-            if room_type == "office":
-                for room_name in list(args):
-                    self.all_rooms.append(Office("office", room_name))
-                    self.offices.append(Office("office", room_name))
-            elif room_type == "livingspace":
-                for room_name in list(args):
-                    self.all_rooms.append(LivingSpace("livingspace", room_name))
-                    self.livingspaces.append(LivingSpace("livingspace", room_name))
-            else:
-                return "Please enter the room type in the correct format"
+            for room_name in list(args):
+                if room_type == "office":
+                    office_instance = Office("office", room_name)
+                    self.all_rooms.append(office_instance)
+                    self.offices.append(office_instance)
+                elif room_type == "livingspace":
+                    livingspace_instance = LivingSpace("livingspace", room_name)
+                    self.all_rooms.append(livingspace_instance)
+                    self.livingspaces.append(livingspace_instance)
 
-    # def available_rooms(self, ):
+            for office in self.offices:                         # this block of code ensure that the room chosen at
+                if office not in self.available_offices:        # random for each added person has a space.
+                    if len(office.occupants) < office.max_no:
+                        self.available_offices.append(office)
+                else:
+                    if len(office.occupants) < office.max_no:
+                        pass
+                    else:
+                        self.available_offices.pop(office)
+            for livingspace in self.livingspaces:
+                if livingspace not in self.available_livingspaces:
+                    if len(livingspace.occupants) < livingspace.max_no:
+                        self.available_livingspaces.append(livingspace)
+                else:
+                    if len(livingspace.occupants) < livingspace.max_no:
+                        pass
+                    else:
+                        self.available_livingspaces.pop(livingspace)
+            else:
+
+                return "Please enter the room type in the correct format"
 
     def add_person(self, person_name, person_type, wants_accomodation="N"):
         if person_name != "":
             if person_type == "fellow":
-                self.all_people.append(Fellow(person_name, person_type, wants_accomodation))
-                self.fellows.append(Fellow(person_name, person_type, wants_accomodation))
-                if (len(self.offices)) == 0:
-                    pass
+                fellow_instance = Fellow(person_name, person_type, wants_accomodation)
+                self.all_people.append(fellow_instance)
+                self.fellows.append(fellow_instance)
+                if (len(self.available_offices)) == 0:
+                    return "No offices exist for placement. Please create an office first."
                 else:
-                    chosen_office_object = random.choice(self.offices)
-                    if len(chosen_office_object.occupants) < 6:
-                        Fellow(person_name, person_type, wants_accomodation).office_assigned = chosen_office_object
-                        chosen_office_object.occupants.append(Fellow(person_name, person_type, wants_accomodation))
-                    else:
-                        return "Office is Full."
+                    chosen_office_object = random.choice(self.available_offices)
+                    fellow_instance.office_assigned = chosen_office_object
+                    chosen_office_object.occupants.append(fellow_instance)
+
                 if wants_accomodation == "Y":
-                    if (len(self.livingspaces)) == 0:
-                        pass
+                    if (len(self.available_livingspaces)) == 0:
+                        return "No living spaces exist for placement. Please create a living space first."
                     else:
-                        chosen_livingspace_object = random.choice(self.livingspaces)
-                        if len(chosen_livingspace_object.occupants) < 4:
-                            Fellow(person_name, person_type, wants_accomodation).livingspace_assigned = chosen_livingspace_object
-                            chosen_livingspace_object.occupants.append(Fellow(person_name, person_type, wants_accomodation))
+                        chosen_livingspace_object = random.choice(self.available_livingspaces)
+                        fellow_instance.livingspace_assigned = chosen_livingspace_object
+                        chosen_livingspace_object.occupants.append(fellow_instance)
 
             elif person_type == "staff":
-                self.all_people.append(Staff(person_name, person_type, wants_accomodation))
-                self.staff.append(Staff(person_name, person_type, wants_accomodation))
-                if (len(self.offices)) == 0:
-                    pass
+                staff_instance = Staff(person_name, person_type, wants_accomodation)
+                self.all_people.append(staff_instance)
+                self.staff.append(staff_instance)
+                if (len(self.available_offices)) == 0:
+                    return "No offices exist for placement. Please create an office first."
                 else:
-                    chosen_office_object = random.choice(self.offices)
-                    if len(chosen_office_object.occupants) < 6:
-                        Staff(person_name, person_type, wants_accomodation).office_assigned = chosen_office_object
-                        chosen_office_object.occupants.append(Staff(person_name, person_type, wants_accomodation))
+                    chosen_office_object = random.choice(self.available_offices)
+                    staff_instance.office_assigned = chosen_office_object
+                    chosen_office_object.occupants.append(staff_instance)
 
+            for office in self.offices:
+                if office not in self.available_offices:
+                    if len(office.occupants) < office.max_no:
+                        self.available_offices.append(office)
+                else:
+                    if len(office.occupants) < office.max_no:
+                        pass
+                    else:
+                        self.available_offices.pop(office)
+            for livingspace in self.livingspaces:
+                if livingspace not in self.available_livingspaces:
+                    if len(livingspace.occupants) < livingspace.max_no:
+                        self.available_livingspaces.append(livingspace)
+                else:
+                    if len(livingspace.occupants) < livingspace.max_no:
+                        pass
+                    else:
+                        self.available_livingspaces.pop(livingspace)
             else:
                 return "Please enter the person type in the correct format"
 
@@ -97,3 +133,4 @@ class Dojo(object):
                     while x < count2:
                         output_txt.write(self.all_rooms[i].occupants.person_name)
                         x += 1
+

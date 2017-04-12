@@ -8,10 +8,12 @@ class Room(object):
 
 
 class Office(Room):
-    def __init__(self, room_type, room_name):
+    def __init__(self, room_type, room_name, max_no=6):
         super().__init__(room_type, room_name)
+        self.max_no = max_no
 
 
 class LivingSpace(Room):
-    def __init__(self, room_type, room_name):
+    def __init__(self, room_type, room_name, max_no=4):
         super().__init__(room_type, room_name)
+        self.max_no = max_no
