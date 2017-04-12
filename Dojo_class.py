@@ -77,7 +77,13 @@ class Dojo(object):
             else:
                 return "Please enter the person type in the correct format"
 
-    # def print_room(self, room_name):
+    def print_room(self, room_name):
+        i = 0                               # creation of loop condition for the loop to terminate after finishing the list of rooms
+        count = (len(self.all_rooms)) - 1
+        while i < count:
+            if self.all_rooms[i].room_name == room_name:
+                return self.all_rooms[i].occupants
+
 
 
 
