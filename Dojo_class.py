@@ -16,19 +16,21 @@ class Dojo(object):
         self.unallocated_offices = []
         self.unallocated_livingspaces = []
 
-    def create_room(self, room_type, *args):
-        if len(args) != 0:
-            for room_name in list(args):
+    def create_room(self, room_type, rooms_to_make):
+        if len(rooms_to_make) != 0:
+            for room_name in rooms_to_make:
                 if room_type == "office":
-                    office_instance = Office("office", str(room_name[0]))   # to ensure the instance being worked on
+                    office_instance = Office("office", room_name)           # to ensure the instance being worked on
                     self.all_rooms.append(office_instance)                  # during the function call is singular
                     self.offices.append(office_instance)
                     self.available_offices.append(office_instance)
+                    print("An {} called {} has been created".format(office_instance.room_type, office_instance.room_name))
                 elif room_type == "livingspace":
                     livingspace_instance = LivingSpace("livingspace", room_name)
                     self.all_rooms.append(livingspace_instance)
                     self.livingspaces.append(livingspace_instance)
                     self.available_livingspaces.append(livingspace_instance)
+                    print("A {} called {} has been created".format(livingspace_instance.room_type, livingspace_instance.room_name))
                 else:
                     return "Incorrect format of room type used. Check help."
 
@@ -39,12 +41,14 @@ class Dojo(object):
                 fellow_instance = Fellow(person_name, person_type, wants_accomodation)
                 self.all_people.append(fellow_instance)
                 self.fellows.append(fellow_instance)
+                print("An {} called {} has been created".format(office_instance.room_type, office_instance.room_name))
                 if (len(self.available_offices)) == 0:
                     self.unallocated_offices.append(fellow_instance)
                 else:
                     chosen_office_object = random.choice(self.available_offices)
                     fellow_instance.office_assigned = chosen_office_object
                     chosen_office_object.occupants.append(fellow_instance)
+                    return
 
                 if wants_accomodation == "Y":
                     if (len(self.available_livingspaces)) == 0:
@@ -64,6 +68,8 @@ class Dojo(object):
                     chosen_office_object = random.choice(self.available_offices)
                     staff_instance.office_assigned = chosen_office_object
                     chosen_office_object.occupants.append(staff_instance)
+            else:
+                return "Please enter the person type in the correct format."
 
             for office in self.available_offices:
                 if len(office.occupants) < office.max_no:
@@ -75,15 +81,16 @@ class Dojo(object):
                     pass
                 else:
                     self.available_livingspaces.pop(livingspace)
-            else:
-                return "Please enter the person type in the correct format."
+
 
     def print_room(self, room_name):
-        i = 0   # creation of termination factor for loop
-        count = (len(self.all_rooms)) - 1
-        while i < count:
-            if self.all_rooms[i].room_name == room_name:
-                print(self.all_rooms[i].occupants)
+        for rooms in self.all_rooms:
+            if rooms.room_name == room_name:
+                for occupants in rooms.occupants:
+                    print(occupants.person_name)
+            else:
+                print(self.all_rooms[0].room_name)
+                print('That room doesn\'t exist')
 
     def print_allocations(self, option_to_txt_file=""):
         i = 0  # creation of termination factor for loop

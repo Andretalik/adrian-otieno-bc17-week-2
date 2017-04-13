@@ -6,14 +6,14 @@ class TestCreateRoom(unittest.TestCase):
     def test_create_one_room_successful(self):
         test_instance_one_room = Dojo()
         initial_rooms_count = len(test_instance_one_room.all_rooms)
-        test_instance_one_room.create_room("livingspace", "Drangleic")
+        test_instance_one_room.create_room("livingspace", ["Drangleic"])
         final_rooms_count = len(test_instance_one_room.all_rooms)
         self.assertEqual(final_rooms_count - initial_rooms_count, 1, 'The room has not been created')
 
     def test_create_multiple_rooms(self):
         test_instance_multiple_rooms = Dojo()
         initial_rooms_count = len(test_instance_multiple_rooms.all_rooms)
-        test_instance_multiple_rooms.create_room("livingspace", "Drangleic", "Rockport", "Camden", "Halo")
+        test_instance_multiple_rooms.create_room("livingspace", ["Drangleic", "Rockport", "Camden", "Halo"])
         self.assertEqual(test_instance_multiple_rooms.all_rooms[0].room_name, "Drangleic", "The rooms have not been created")
         self.assertEqual(test_instance_multiple_rooms.all_rooms[2].room_name, "Camden", "The rooms have not been created")
         final_rooms_count = len(test_instance_multiple_rooms.all_rooms)
@@ -49,7 +49,7 @@ class TestAddPerson(unittest.TestCase):
         self.assertEqual(testing, "Please enter the person type in the correct format.", msg="Program broken by syntax error in add_person method.")
 
     def test_person_room_allocation(self):
-        self.test_case_instance.create_room("livingspace", "Drangleic", "Rockport", "Camden", "Halo")
+        self.test_case_instance.create_room("livingspace", ["Drangleic", "Rockport", "Camden", "Halo"])
         self.test_case_instance.create_room("office", "Paladins")
         self.test_case_instance.add_person("General Shephard", "fellow", "Y")
         # print(self.test_case_instance.all_people)
@@ -65,7 +65,7 @@ class TestMembersOfRooms(unittest.TestCase):
         self.dojo = Dojo()
 
     def test_member_in_specific_rooms(self):
-        self.dojo.create_room("office", "Overwatch")
+        self.dojo.create_room("office", ["Overwatch"])
         self.dojo.add_person("Androxus Godslayer", "staff")
         self.dojo.add_person("Samus Aran", "fellow")
         self.dojo.add_person("Christianne Ochieng", "fellow")
