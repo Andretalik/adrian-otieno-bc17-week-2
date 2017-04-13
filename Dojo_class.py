@@ -20,8 +20,8 @@ class Dojo(object):
         if len(args) != 0:
             for room_name in list(args):
                 if room_type == "office":
-                    office_instance = Office("office", room_name)
-                    self.all_rooms.append(office_instance)
+                    office_instance = Office("office", str(room_name[0]))   # to ensure the instance being worked on
+                    self.all_rooms.append(office_instance)                  # during the function call is singular
                     self.offices.append(office_instance)
                     self.available_offices.append(office_instance)
                 elif room_type == "livingspace":
@@ -29,6 +29,8 @@ class Dojo(object):
                     self.all_rooms.append(livingspace_instance)
                     self.livingspaces.append(livingspace_instance)
                     self.available_livingspaces.append(livingspace_instance)
+                else:
+                    return "Incorrect format of room type used. Check help."
 
 
     def add_person(self, person_name, person_type, wants_accomodation="N"):
@@ -74,7 +76,7 @@ class Dojo(object):
                 else:
                     self.available_livingspaces.pop(livingspace)
             else:
-                return "Please enter the person type in the correct format"
+                return "Please enter the person type in the correct format."
 
     def print_room(self, room_name):
         i = 0   # creation of termination factor for loop

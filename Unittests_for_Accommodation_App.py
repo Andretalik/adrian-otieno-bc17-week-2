@@ -19,9 +19,10 @@ class TestCreateRoom(unittest.TestCase):
         final_rooms_count = len(test_instance_multiple_rooms.all_rooms)
         self.assertEqual(final_rooms_count - initial_rooms_count, 4, "Multiple rooms were not created")
 
-    '''def test_wrong_syntax(self):
-        test_instance_wrong_syntax = Dojo()
-        test_instance_wrong_syntax.create_room("sleepingarea", "Sony")'''
+    def test_wrong_syntax_create_room(self):
+        test_instance_wrong_syntax_room = Dojo()
+        testing = test_instance_wrong_syntax_room.create_room("sleepingarea", "Son Goku")
+        self.assertEqual(testing, "Incorrect format of room type used. Check help.", msg="Program broken by syntax error in create_room method.")
 
 
 class TestAddPerson(unittest.TestCase):
@@ -41,6 +42,11 @@ class TestAddPerson(unittest.TestCase):
         test_instance_person_add_staff.add_person("Master Chief", "staff", "Y")
         final_person_count = len(test_instance_person_add_staff.all_people)
         self.assertEqual(final_person_count - initial_person_count, 1, 'The person has not been added')
+
+    def test_wrong_syntax_add_person(self):
+        test_instance_wrong_syntax_person = Dojo()
+        testing = test_instance_wrong_syntax_person.add_person("Kurosaki Ichigo", "worker")
+        self.assertEqual(testing, "Please enter the person type in the correct format.", msg="Program broken by syntax error in add_person method.")
 
     def test_person_room_allocation(self):
         self.test_case_instance.create_room("livingspace", "Drangleic", "Rockport", "Camden", "Halo")
