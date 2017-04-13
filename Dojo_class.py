@@ -41,14 +41,14 @@ class Dojo(object):
                 fellow_instance = Fellow(person_name, person_type, wants_accomodation)
                 self.all_people.append(fellow_instance)
                 self.fellows.append(fellow_instance)
-                print("An {} called {} has been created".format(office_instance.room_type, office_instance.room_name))
+                print("{} called {} has been created".format(fellow_instance.person_type, fellow_instance.person_name))
                 if (len(self.available_offices)) == 0:
                     self.unallocated_offices.append(fellow_instance)
                 else:
                     chosen_office_object = random.choice(self.available_offices)
                     fellow_instance.office_assigned = chosen_office_object
                     chosen_office_object.occupants.append(fellow_instance)
-                    return
+                    print("{} has been allocated office {}".format(fellow_instance.person_name, fellow_instance.office_assigned))
 
                 if wants_accomodation == "Y":
                     if (len(self.available_livingspaces)) == 0:
@@ -57,6 +57,7 @@ class Dojo(object):
                         chosen_livingspace_object = random.choice(self.available_livingspaces)
                         fellow_instance.livingspace_assigned = chosen_livingspace_object
                         chosen_livingspace_object.occupants.append(fellow_instance)
+                        print("{} has been allocated living space {}".format(fellow_instance.person_name, fellow_instance.livingspace_assigned))
 
             elif person_type == "staff":
                 staff_instance = Staff(person_name, person_type, wants_accomodation)
@@ -68,6 +69,7 @@ class Dojo(object):
                     chosen_office_object = random.choice(self.available_offices)
                     staff_instance.office_assigned = chosen_office_object
                     chosen_office_object.occupants.append(staff_instance)
+                    print("{} has been allocated office {}".format(staff_instance.person_name, staff_instance.office_assigned))
             else:
                 return "Please enter the person type in the correct format."
 
