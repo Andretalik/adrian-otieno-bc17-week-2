@@ -19,6 +19,10 @@ class TestCreateRoom(unittest.TestCase):
         final_rooms_count = len(test_instance_multiple_rooms.all_rooms)
         self.assertEqual(final_rooms_count - initial_rooms_count, 4, "Multiple rooms were not created")
 
+    '''def test_wrong_syntax(self):
+        test_instance_wrong_syntax = Dojo()
+        test_instance_wrong_syntax.create_room("sleepingarea", "Sony")'''
+
 
 class TestAddPerson(unittest.TestCase):
     def setUp(self):
@@ -42,6 +46,7 @@ class TestAddPerson(unittest.TestCase):
         self.test_case_instance.create_room("livingspace", "Drangleic", "Rockport", "Camden", "Halo")
         self.test_case_instance.create_room("office", "Paladins")
         self.test_case_instance.add_person("General Shephard", "fellow", "Y")
+        # print(self.test_case_instance.all_people)
         self.assertIn(self.test_case_instance.fellows[0].office_assigned, self.test_case_instance.offices, "Person hasn't been assigned an office")
         self.assertIn(self.test_case_instance.fellows[0].livingspace_assigned, self.test_case_instance.livingspaces, "Person hasn't been assigned a living-space")
 
