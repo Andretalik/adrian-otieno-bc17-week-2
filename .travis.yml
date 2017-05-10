@@ -10,7 +10,8 @@ install:
 # - DB=postgres
 # addons:
 # postgresql: "9.4"
-# script:
+script:
+  - echo foo 
 # - coverage run --omit=*/tests/* --source=hc manage.py test
 # after_success: coveralls
 cache: pip
