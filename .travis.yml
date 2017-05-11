@@ -12,7 +12,7 @@ install:
 # postgresql: "9.4"
 script:
   - echo foo
-  - coverage run docopt_main.py Dojo_class.py
+  - coveralls
 # --source=hc  --omit=*Unittests_for_Accommodation_App.py*
 after_success: coveralls
 cache: pip
