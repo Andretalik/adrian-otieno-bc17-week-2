@@ -3,7 +3,7 @@ python:
   - "3.6"
 install:
     - pip install -r requirements.txt
-    # - pip install braintree coveralls mock mysqlclient
+    - pip install coveralls
 # env:
 # - DB=sqlite
 # - DB=mysql
@@ -12,8 +12,9 @@ install:
 # postgresql: "9.4"
 script:
   - echo foo
-# - coverage run --omit=*/tests/* --source=hc manage.py test
-# after_success: coveralls
+  - coverage run --omit=*Unittests_for_Accommodation_App* docopt_main.py Dojo_class.py Person_Class.py Room_Class.py
+# --source=hc
+after_success: coveralls
 cache: pip
 notifications:
   slack: andela:ckqdCeo8WuWg0dABDHQhAFQp
