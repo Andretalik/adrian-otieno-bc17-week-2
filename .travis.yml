@@ -11,7 +11,6 @@ install:
 # addons:
 # postgresql: "9.4"
 script:
-  - echo foo
   - coveralls
 # --source=hc  --omit=*Unittests_for_Accommodation_App.py*
 after_success: coveralls
