@@ -11,7 +11,9 @@ install:
 # addons:
 # postgresql: "9.4"
 script:
-  - echo foo 
+  - echo foo
 # - coverage run --omit=*/tests/* --source=hc manage.py test
 # after_success: coveralls
 cache: pip
+notifications:
+  slack: andela:ckqdCeo8WuWg0dABDHQhAFQp
