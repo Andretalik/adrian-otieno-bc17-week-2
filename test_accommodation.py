@@ -1,5 +1,5 @@
 import unittest
-from Dojo_class import *
+from Dojo_class import Dojo
 
 
 class TestCreateRoom(unittest.TestCase):
@@ -72,3 +72,6 @@ class TestMembersOfRooms(unittest.TestCase):
         self.dojo.print_room("Paladins")
         self.assertIn(self.dojo.all_rooms[0].occupants[0], self.dojo.all_people, "Function isn't appending rooms correctly")
         self.assertIn(self.dojo.all_rooms[0].occupants[1], self.dojo.all_people, "Function isn't appending rooms correctly")
+
+if __name__ == '__main__':
+    unittest.main()
