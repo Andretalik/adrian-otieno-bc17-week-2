@@ -12,9 +12,9 @@ install:
 # postgresql: "9.4"
 script:
   - python -m nose --with-coverage
-  # - coveralls
+  - coveralls
 # --source=hc  --omit=*Unittests_for_Accommodation_App.py*
-# after_success: coveralls
+after_success: coveralls
 cache: pip
 notifications:
   slack: andela:ckqdCeo8WuWg0dABDHQhAFQp
