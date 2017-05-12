@@ -1,7 +1,7 @@
 import sys
 import cmd
 from docopt import docopt, DocoptExit
-from Dojo_class import *
+from Dojo_class import Dojo
 
 __doc__ = """
 This example uses docopt with the built in cmd module to demonstrate an
@@ -21,6 +21,8 @@ Options:
     <room_name>  Name of the room
 """
 dojo = Dojo()
+
+
 def docopt_cmd(func):
     """
     This decorator is used to simplify the try/except block and pass the result
@@ -63,7 +65,6 @@ class MyInteractive(cmd.Cmd):
         """Usage: create_room <room_type> <room_name>..."""
         print(dojo.create_room(args['<room_type>'], args['<room_name>']))
 
-
     @docopt_cmd
     def do_add_person(self, args):
         """Usage: add_person <person_name> <person_type> [<wants_accommodation>]"""
@@ -74,7 +75,6 @@ class MyInteractive(cmd.Cmd):
     def do_print_room(self, args):
         """Usage: print_room <room_name>"""
         print(dojo.print_room(args['<room_name>']))
-
 
     def do_quit(self, args):
         exit()
