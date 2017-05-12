@@ -3,3 +3,4 @@ Dojo_allocation/
 .cache/
 .idea/
 *.pyc
+.DS_Store
