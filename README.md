@@ -1,1 +1,2 @@
 [![Build Status](https://travis-ci.org/Andretalik/adrian-otieno-bc17-week-2.svg?branch=redundancy_fix)](https://travis-ci.org/Andretalik/adrian-otieno-bc17-week-2.svg?branch=redundancy_fix)
+[![Coverage Status](https://coveralls.io/repos/github/Andretalik/adrian-otieno-bc17-week-2/badge.svg?branch=redundancy_fix)](https://coveralls.io/github/Andretalik/adrian-otieno-bc17-week-2?branch=redundancy_fix)
