@@ -2,8 +2,8 @@ language: python
 python:
   - "3.6"
 install:
-    - pip install -r requirements.txt
-    - pip install coveralls
+    - "pip install -r requirements.txt"
+    - "pip install python-coveralls"
 # env:
 # - DB=sqlite
 # - DB=mysql
@@ -11,6 +11,7 @@ install:
 # addons:
 # postgresql: "9.4"
 script:
+  - python -m nose --with-coverage
   - coveralls
 # --source=hc  --omit=*Unittests_for_Accommodation_App.py*
 after_success: coveralls
