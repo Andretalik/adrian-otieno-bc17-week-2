@@ -15,4 +15,3 @@ class Fellow(Person):
 class Staff(Person):
     def __init__(self, person_name, person_type, wants_accommodation):
         super().__init__(person_name, person_type, wants_accommodation)
-
