@@ -4,3 +4,4 @@ Dojo_allocation/
 .idea/
 *.pyc
 .DS_Store
+.coverage
