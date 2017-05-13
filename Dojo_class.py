@@ -1,6 +1,6 @@
 import random
-from Room_Class import *
-from Person_Class import *
+from Room_Class import Office, LivingSpace
+from Person_Class import Fellow, Staff
 
 
 class Dojo(object):
