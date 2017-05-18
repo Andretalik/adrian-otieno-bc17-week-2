@@ -73,5 +73,60 @@ class TestMembersOfRooms(unittest.TestCase):
         self.assertIn(self.dojo.all_rooms[0].occupants[0], self.dojo.all_people, "Function isn't appending rooms correctly")
         self.assertIn(self.dojo.all_rooms[0].occupants[1], self.dojo.all_people, "Function isn't appending rooms correctly")
 
+
+class TestAllocationPrintout(unittest.TestCase):
+    def setUp(self):
+        self.dojo = Dojo()
+
+    def tearDown(self):
+        self.dojo = Dojo()
+
+    def test_created_textfile(self):
+        self.dojo.create_room("office", ["Overwatch"])
+        self.dojo.add_person("Androxus Godslayer", "staff")
+        self.dojo.add_person("Samus Aran", "fellow")
+        self.dojo.add_person("Christianne Ochieng", "fellow")
+
+
+class TestPrintUnallocated(unittest.TestCase):
+    def setUp(self):
+        self.dojo = Dojo()
+
+    def tearDown(self):
+        self.dojo = Dojo()
+
+        self.dojo.add_person("Androxus Godslayer", "staff")
+        self.dojo.add_person("Samus Aran", "fellow")
+        self.dojo.add_person("Christianne Ochieng", "fellow")
+
+
+class TestReallocation(unittest.TestCase):
+    def setUp(self):
+        self.dojo = Dojo()
+
+    def tearDown(self):
+        self.dojo = Dojo()
+
+    def test_person_reallocated(self):
+
+
+class TestLoadPeople(unittest.TestCase):
+    def setUp(self):
+        self.dojo = Dojo()
+
+    def tearDown(self):
+        self.dojo = Dojo()
+
+    def test_loading_people(self):
+
+
+class TestDatabase(unittest.TestCase):
+    def setUp(self):
+        self.dojo = Dojo()
+
+    def tearDown(self):
+        self.dojo = Dojo()
+
+
 if __name__ == '__main__':
     unittest.main()
