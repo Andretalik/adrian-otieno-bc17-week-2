@@ -20,8 +20,8 @@ class Dojo(object):
         if len(rooms_to_make) != 0:
             for room_name in rooms_to_make:
                 if room_type == "office":
-                    office_instance = Office("office", room_name)           # to ensure the instance being worked on
-                    self.all_rooms.append(office_instance)                  # during the function call is singular
+                    office_instance = Office("office", room_name)
+                    self.all_rooms.append(office_instance)
                     self.offices.append(office_instance)
                     self.available_offices.append(office_instance)
                     print("An {} called {} has been created".format(office_instance.room_type, office_instance.room_name))
@@ -83,7 +83,6 @@ class Dojo(object):
                     pass
                 else:
                     self.available_livingspaces.pop(livingspace)
-
 
     def print_room(self, room_name):
         for rooms in self.all_rooms:
