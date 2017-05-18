@@ -112,8 +112,7 @@ class Dojo(object):
                         print(self.all_rooms[i].occupants.person_first_name)
                         x += 1
         else:
-            txt_filename = option_to_txt_file
-            output_txt = open(txt_filename, mode='w+')
+            output_txt = open(option_to_txt_file, mode='w+')
             while i < count:
                 if len(self.all_rooms[i].occupants) > 0:
                     output_txt.write(self.all_rooms[i].room_name)
