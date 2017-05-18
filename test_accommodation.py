@@ -29,6 +29,9 @@ class TestAddPerson(unittest.TestCase):
     def setUp(self):
         self.test_case_instance = Dojo()
 
+    def tearDown(self):
+        self.test_case_instance = Dojo()
+
     def test_add_person_fellow_successful(self):
         test_instance_person_add = Dojo()
         initial_person_count = len(test_instance_person_add.all_people)
@@ -56,6 +59,21 @@ class TestAddPerson(unittest.TestCase):
         self.assertIn(self.test_case_instance.fellows[0].office_assigned, self.test_case_instance.offices, "Person hasn't been assigned an office")
         self.assertIn(self.test_case_instance.fellows[0].livingspace_assigned, self.test_case_instance.livingspaces, "Person hasn't been assigned a living-space")
 
+
+class TestDeletePerson(unittest.TestCase):
+    def setUp(self):
+        self.dojo = Dojo()
+
+    def tearDown(self):
+        self.dojo = Dojo()
+
+    def test_if_person_deleted(self):
+        self.dojo.create_room("office", ["Overwatch"])
+        self.dojo.add_person("Androxus Godslayer", "staff")
+        self.dojo.add_person("Samus Aran", "fellow")
+        self.dojo.add_person("Christianne Ochieng", "fellow")
+        self.dojo.delete_person(ID)
+        self.assertNotIn(ID, self.dojo.all_people)
 
 class TestMembersOfRooms(unittest.TestCase):
     def setUp(self):
@@ -145,9 +163,10 @@ class TestDatabase(unittest.TestCase):
         self.dojo = Dojo()
 
     def test_save_to_db(self):
-
+        pass
 
     def test_load_from_db(self):
+        pass
 
 
 if __name__ == '__main__':
