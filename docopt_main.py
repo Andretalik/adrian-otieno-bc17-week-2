@@ -1,7 +1,7 @@
 import sys
 import cmd
 from docopt import docopt, DocoptExit
-from Dojo_class import Dojo
+from dojo_class import Dojo
 
 __doc__ = """
 This example uses docopt with the built in cmd module to demonstrate an
@@ -67,9 +67,8 @@ class MyInteractive(cmd.Cmd):
 
     @docopt_cmd
     def do_add_person(self, args):
-        """Usage: add_person <person_name> <person_type> [<wants_accommodation>]"""
-        print((args['<person_type>']))
-        print(dojo.add_person(args['<person_name>'], args['<person_type>'], args['<wants_accommodation>']))
+        """Usage: add_person <person_first_name> <person_second_name> <person_type> [<wants_accommodation>]"""
+        print(dojo.add_person(args['<person_first_name>'], args['<person_second_name>'], args['<person_type>'], args['<wants_accommodation>']))
 
     @docopt_cmd
     def do_print_room(self, args):
