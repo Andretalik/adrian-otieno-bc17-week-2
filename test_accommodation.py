@@ -69,7 +69,7 @@ class TestMembersOfRooms(unittest.TestCase):
         self.dojo.add_person("Androxus Godslayer", "staff")
         self.dojo.add_person("Samus Aran", "fellow")
         self.dojo.add_person("Christianne Ochieng", "fellow")
-        self.dojo.print_room("Paladins")
+        self.dojo.print_room("Overwatch")
         self.assertIn(self.dojo.all_rooms[0].occupants[0], self.dojo.all_people, "Function isn't appending rooms correctly")
         self.assertIn(self.dojo.all_rooms[0].occupants[1], self.dojo.all_people, "Function isn't appending rooms correctly")
 
@@ -86,6 +86,9 @@ class TestAllocationPrintout(unittest.TestCase):
         self.dojo.add_person("Androxus Godslayer", "staff")
         self.dojo.add_person("Samus Aran", "fellow")
         self.dojo.add_person("Christianne Ochieng", "fellow")
+        self.dojo.print_allocations("Allocations")
+        allocations_file = open("Allocations.txt", "r")
+        self.assertIn("Androxus Godslayer", allocations_file)
 
 
 class TestPrintUnallocated(unittest.TestCase):
@@ -95,9 +98,13 @@ class TestPrintUnallocated(unittest.TestCase):
     def tearDown(self):
         self.dojo = Dojo()
 
+    def test_unallocated_people_printed(self):
         self.dojo.add_person("Androxus Godslayer", "staff")
         self.dojo.add_person("Samus Aran", "fellow")
         self.dojo.add_person("Christianne Ochieng", "fellow")
+        self.dojo.print_unallocated("Unallocated")
+        unallocated_file = open("Unallocated.txt", "r")
+        self.assertIn("Samus Aran", unallocated_file)
 
 
 class TestReallocation(unittest.TestCase):
@@ -108,6 +115,11 @@ class TestReallocation(unittest.TestCase):
         self.dojo = Dojo()
 
     def test_person_reallocated(self):
+        self.dojo.create_room("office", ["Lenovo"])
+        self.dojo.add_person("Androxus Godslayer", "staff")
+        self.dojo.create_room("office", ["Lamar", "Risque"])
+        self.dojo.reallocate_person("ID", "Risque")
+        self.assertEqual(self.all_people[0].office_assigned, "Risque")
 
 
 class TestLoadPeople(unittest.TestCase):
@@ -118,6 +130,7 @@ class TestLoadPeople(unittest.TestCase):
         self.dojo = Dojo()
 
     def test_loading_people(self):
+
 
 
 class TestDatabase(unittest.TestCase):
