@@ -130,7 +130,11 @@ class TestLoadPeople(unittest.TestCase):
         self.dojo = Dojo()
 
     def test_loading_people(self):
-
+        loaded_file = open("People.txt", "r")
+        initial_people_count = len(self.all_people)
+        self.dojo.add_people(loaded_file)
+        final_person_count = len(self.all_people)
+        self.assertNotEqual(final_person_count - initial_people_count, 0)
 
 
 class TestDatabase(unittest.TestCase):
@@ -139,6 +143,11 @@ class TestDatabase(unittest.TestCase):
 
     def tearDown(self):
         self.dojo = Dojo()
+
+    def test_save_to_db(self):
+
+
+    def test_load_from_db(self):
 
 
 if __name__ == '__main__':
