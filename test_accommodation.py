@@ -25,6 +25,19 @@ class TestCreateRoom(unittest.TestCase):
         self.assertEqual(testing, "Incorrect format of room type used. Check help.", msg="Program broken by syntax error in create_room method.")
 
 
+class TestDeleteRoom(unittest.TestCase):
+    def setUp(self):
+        self.dojo = Dojo()
+
+    def tearDown(self):
+        self.dojo = Dojo()
+
+    def test_room_successfully_deleted(self):
+        self.dojo.create_room("livingspace", ["Drangleic", "Rockport", "Camden", "Halo"])
+        self.dojo.create_room("office", "Paladins")
+        self.dojo.delete_room("office", ["Drangleic"])
+        self.assertNotEqual(self.dojo.all_rooms[0].room_name, "Drangleic")
+
 class TestAddPerson(unittest.TestCase):
     def setUp(self):
         self.test_case_instance = Dojo()
