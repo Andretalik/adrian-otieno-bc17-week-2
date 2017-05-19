@@ -62,16 +62,16 @@ class TestAddPerson(unittest.TestCase):
 
     def test_wrong_syntax_add_person(self):
         test_instance_wrong_syntax_person = Dojo()
-        testing = test_instance_wrong_syntax_person.add_person("Kurosaki Ichigo", "worker")
+        testing = test_instance_wrong_syntax_person.add_person("Kurosaki", "Ichigo", "worker")
         self.assertEqual(testing, "Please enter the person type in the correct format.", msg="Program broken by syntax error in add_person method.")
 
     def test_person_room_allocation(self):
         self.test_case_instance.create_room("livingspace", ["Drangleic", "Rockport", "Camden", "Halo"])
-        self.test_case_instance.create_room("office", "Paladins")
+        self.test_case_instance.create_room("office", ["Paladins"])
         self.test_case_instance.add_person("General Shephard", "fellow", "Y")
         # print(self.test_case_instance.all_people)
-        self.assertIn(self.test_case_instance.fellows[0].office_assigned, self.test_case_instance.offices, "Person hasn't been assigned an office")
-        self.assertIn(self.test_case_instance.fellows[0].livingspace_assigned, self.test_case_instance.livingspaces, "Person hasn't been assigned a living-space")
+        self.assertIn(self.test_case_instance.all_people[0].office_assigned, self.test_case_instance.offices, "Person hasn't been assigned an office")
+        self.assertIn(self.test_case_instance.all_people[0].livingspace_assigned, self.test_case_instance.livingspaces, "Person hasn't been assigned a living-space")
 
 
 class TestDeletePerson(unittest.TestCase):
@@ -99,9 +99,9 @@ class TestMembersOfRooms(unittest.TestCase):
 
     def test_member_in_specific_rooms(self):
         self.dojo.create_room("office", ["Overwatch"])
-        self.dojo.add_person("Androxus Godslayer", "staff")
-        self.dojo.add_person("Samus Aran", "fellow")
-        self.dojo.add_person("Christianne Ochieng", "fellow")
+        self.dojo.add_person("Androxus", "Godslayer", "staff")
+        self.dojo.add_person("Samus", "Aran", "fellow")
+        self.dojo.add_person("Christianne", "Ochieng", "fellow")
         self.dojo.print_room("Overwatch")
         self.assertIn(self.dojo.all_rooms[0].occupants[0], self.dojo.all_people, "Function isn't appending rooms correctly")
         self.assertIn(self.dojo.all_rooms[0].occupants[1], self.dojo.all_people, "Function isn't appending rooms correctly")
@@ -116,7 +116,7 @@ class TestAllocationPrintout(unittest.TestCase):
 
     def test_created_textfile(self):
         self.dojo.create_room("office", ["Overwatch"])
-        self.dojo.add_person("Androxus Godslayer", "staff")
+        self.dojo.add_person("Androxus", "Godslayer", "staff")
         self.dojo.add_person("Samus Aran", "fellow")
         self.dojo.add_person("Christianne Ochieng", "fellow")
         self.dojo.print_allocations("Allocations")
@@ -132,9 +132,9 @@ class TestPrintUnallocated(unittest.TestCase):
         self.dojo = Dojo()
 
     def test_unallocated_people_printed(self):
-        self.dojo.add_person("Androxus Godslayer", "staff")
-        self.dojo.add_person("Samus Aran", "fellow")
-        self.dojo.add_person("Christianne Ochieng", "fellow")
+        self.dojo.add_person("Androxus", "Godslayer", "staff")
+        self.dojo.add_person("Samus", "Aran", "fellow")
+        self.dojo.add_person("Christianne", "Ochieng", "fellow")
         self.dojo.print_unallocated("Unallocated")
         unallocated_file = open("Unallocated.txt", "r")
         self.assertIn("Samus Aran", unallocated_file)
@@ -149,7 +149,7 @@ class TestReallocation(unittest.TestCase):
 
     def test_person_reallocated(self):
         self.dojo.create_room("office", ["Lenovo"])
-        self.dojo.add_person("Androxus Godslayer", "staff")
+        self.dojo.add_person("Androxus", "Godslayer", "staff")
         self.dojo.create_room("office", ["Lamar", "Risque"])
         self.dojo.reallocate_person("ID", "Risque")
         self.assertEqual(self.all_people[0].office_assigned, "Risque")
@@ -174,17 +174,17 @@ class TestDatabase(unittest.TestCase):
     def setUp(self):
         self.dojo = Dojo()
         self.dojo.create_room("office", ["Overwatch"])
-        self.dojo.add_person("Androxus Godslayer", "staff")
-        self.dojo.add_person("Samus Aran", "fellow")
-        self.dojo.add_person("Christianne Ochieng", "fellow")
+        self.dojo.add_person("Androxus", "Godslayer", "staff")
+        self.dojo.add_person("Samus", "Aran", "fellow")
+        self.dojo.add_person("Christianne", "Ochieng", "fellow")
         self.dojo.save_to_db("allocation.db")
 
     def tearDown(self):
         self.dojo = Dojo()
         self.dojo.create_room("office", ["Overwatch"])
-        self.dojo.add_person("Androxus Godslayer", "staff")
-        self.dojo.add_person("Samus Aran", "fellow")
-        self.dojo.add_person("Christianne Ochieng", "fellow")
+        self.dojo.add_person("Androxus", "Godslayer", "staff")
+        self.dojo.add_person("Samus", "Aran", "fellow")
+        self.dojo.add_person("Christianne", "Ochieng", "fellow")
 
     def test_save_to_db(self):
         self.assertTrue(os.path.exists, "./db/allocation.db")
