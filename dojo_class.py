@@ -32,7 +32,7 @@ class Dojo(object):
                     self.available_livingspaces.append(livingspace_instance)
                     print("A {} called {} has been created".format(livingspace_instance.room_type, livingspace_instance.room_name))
                 else:
-                    print("Incorrect format of room type used. Check help.")
+                    return "Incorrect format of room type used. Check help."
 
     def add_person(self, person_first_name, person_second_name, person_type, wants_accomodation="N"):
         if person_first_name != "" and person_second_name != "":
@@ -75,7 +75,7 @@ class Dojo(object):
                     chosen_office_object.occupants.append(staff_instance)
                     print("{} has been allocated office {}".format(staff_instance.person_first_name, staff_instance.office_assigned.room_name))
             else:
-                print("Please enter the person type in the correct format.")
+                return "Please enter the person type in the correct format."
 
             for office in self.available_offices:
                 if len(office.occupants) < office.max_no:
