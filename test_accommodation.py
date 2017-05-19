@@ -190,7 +190,7 @@ class TestDatabase(unittest.TestCase):
 
     def test_db_exists_for_loading(self):
         self.dojo.load_db("allocation.db")
-        self.assertTrue(os.path.exists, "./db/allocation.db")    
+        self.assertTrue(os.path.exists, "./db/allocation.db")
 
 
 if __name__ == '__main__':
