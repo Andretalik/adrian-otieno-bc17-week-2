@@ -35,7 +35,7 @@ class TestDeleteRoom(unittest.TestCase):
 
     def test_room_successfully_deleted(self):
         self.dojo.create_room("livingspace", ["Drangleic", "Rockport", "Camden", "Halo"])
-        self.dojo.create_room("office", "Paladins")
+        self.dojo.create_room("office", ["Paladins"])
         self.dojo.delete_room("office", ["Drangleic"])
         self.assertNotEqual(self.dojo.all_rooms[0].room_name, "Drangleic")
 
@@ -49,14 +49,14 @@ class TestAddPerson(unittest.TestCase):
     def test_add_person_fellow_successful(self):
         test_instance_person_add = Dojo()
         initial_person_count = len(test_instance_person_add.all_people)
-        test_instance_person_add.add_person("Adrian Otieno", "fellow", "Y")
+        test_instance_person_add.add_person("Adrian", "Otieno", "fellow", "Y")
         final_person_count = len(test_instance_person_add.all_people)
         self.assertEqual(final_person_count - initial_person_count, 1, 'The person has not been added')
 
     def test_add_person_staff_successful(self):
         test_instance_person_add_staff = Dojo()
         initial_person_count = len(test_instance_person_add_staff.all_people)
-        test_instance_person_add_staff.add_person("Master Chief", "staff", "Y")
+        test_instance_person_add_staff.add_person("Master", "Chief", "staff", "Y")
         final_person_count = len(test_instance_person_add_staff.all_people)
         self.assertEqual(final_person_count - initial_person_count, 1, 'The person has not been added')
 
@@ -68,7 +68,7 @@ class TestAddPerson(unittest.TestCase):
     def test_person_room_allocation(self):
         self.test_case_instance.create_room("livingspace", ["Drangleic", "Rockport", "Camden", "Halo"])
         self.test_case_instance.create_room("office", ["Paladins"])
-        self.test_case_instance.add_person("General Shephard", "fellow", "Y")
+        self.test_case_instance.add_person("General", "Shephard", "fellow", "Y")
         # print(self.test_case_instance.all_people)
         self.assertIn(self.test_case_instance.all_people[0].office_assigned, self.test_case_instance.offices, "Person hasn't been assigned an office")
         self.assertIn(self.test_case_instance.all_people[0].livingspace_assigned, self.test_case_instance.livingspaces, "Person hasn't been assigned a living-space")
@@ -83,9 +83,9 @@ class TestDeletePerson(unittest.TestCase):
 
     def test_if_person_deleted(self):
         self.dojo.create_room("office", ["Overwatch"])
-        self.dojo.add_person("Androxus Godslayer", "staff")
-        self.dojo.add_person("Samus Aran", "fellow")
-        self.dojo.add_person("Christianne Ochieng", "fellow")
+        self.dojo.add_person("Androxus", "Godslayer", "staff")
+        self.dojo.add_person("Samus", "Aran", "fellow")
+        self.dojo.add_person("Christianne", "Ochieng", "fellow")
         self.dojo.delete_person("ID")
         self.assertNotIn("ID", self.dojo.all_people)
 
@@ -117,8 +117,8 @@ class TestAllocationPrintout(unittest.TestCase):
     def test_created_textfile(self):
         self.dojo.create_room("office", ["Overwatch"])
         self.dojo.add_person("Androxus", "Godslayer", "staff")
-        self.dojo.add_person("Samus Aran", "fellow")
-        self.dojo.add_person("Christianne Ochieng", "fellow")
+        self.dojo.add_person("Samus", "Aran", "fellow")
+        self.dojo.add_person("Christianne", "Ochieng", "fellow")
         self.dojo.print_allocations("Allocations")
         allocations_file = open("Allocations.txt", "r")
         self.assertIn("Androxus Godslayer", allocations_file)
