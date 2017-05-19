@@ -45,12 +45,12 @@ class Dojo(object):
 
                 if (len(self.available_offices)) == 0:
                     self.unallocated_offices.append(fellow_instance)
-                    print("{} has been added to the waiting listdue to no available rooms".format(fellow_instance.person_first_name))
+                    print("{} has been added to the waiting list due to no available rooms".format(fellow_instance.person_first_name))
                 else:
                     chosen_office_object = random.choice(self.available_offices)
                     fellow_instance.office_assigned = chosen_office_object
                     chosen_office_object.occupants.append(fellow_instance)
-                    print("{} has been allocated office {}".format(fellow_instance.person_name, fellow_instance.office_assigned))
+                    print("{} has been allocated office {}".format(fellow_instance.person_name, fellow_instance.office_assigned.room_name))
 
                 if wants_accomodation == "Y":
                     if (len(self.available_livingspaces)) == 0:
@@ -59,7 +59,7 @@ class Dojo(object):
                         chosen_livingspace_object = random.choice(self.available_livingspaces)
                         fellow_instance.livingspace_assigned = chosen_livingspace_object
                         chosen_livingspace_object.occupants.append(fellow_instance)
-                        print("{} has been allocated living space {}".format(fellow_instance.person_first_name, fellow_instance.livingspace_assigned))
+                        print("{} has been allocated living space {}".format(fellow_instance.person_first_name, fellow_instance.livingspace_assigned.room_name))
 
             elif person_type == "staff":
                 staff_instance = Staff(person_first_name, person_second_name, person_type, wants_accomodation)
@@ -74,7 +74,7 @@ class Dojo(object):
                     chosen_office_object = random.choice(self.available_offices)
                     staff_instance.office_assigned = chosen_office_object
                     chosen_office_object.occupants.append(staff_instance)
-                    print("{} has been allocated office {}".format(staff_instance.person_first_name, staff_instance.office_assigned))
+                    print("{} has been allocated office {}".format(staff_instance.person_first_name, staff_instance.office_assigned.room_name))
             else:
                 print("Please enter the person type in the correct format.")
 
