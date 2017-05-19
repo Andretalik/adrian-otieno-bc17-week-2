@@ -34,7 +34,6 @@ class Dojo(object):
                 else:
                     print("Incorrect format of room type used. Check help.")
 
-
     def add_person(self, person_first_name, person_second_name, person_type, wants_accomodation="N"):
         if person_first_name != "" and person_second_name != "":
             if person_type == "fellow":
@@ -50,7 +49,7 @@ class Dojo(object):
                     chosen_office_object = random.choice(self.available_offices)
                     fellow_instance.office_assigned = chosen_office_object
                     chosen_office_object.occupants.append(fellow_instance)
-                    print("{} has been allocated office {}".format(fellow_instance.person_name, fellow_instance.office_assigned.room_name))
+                    print("{} has been allocated office {}".format(fellow_instance.person_first_name, fellow_instance.office_assigned.room_name))
 
                 if wants_accomodation == "Y":
                     if (len(self.available_livingspaces)) == 0:
