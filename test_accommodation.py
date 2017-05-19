@@ -1,5 +1,5 @@
 import unittest
-from Dojo_class import Dojo
+from dojo_class import Dojo
 import os
 
 
