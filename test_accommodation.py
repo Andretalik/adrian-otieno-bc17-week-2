@@ -86,8 +86,9 @@ class TestDeletePerson(unittest.TestCase):
         self.dojo.add_person("Androxus Godslayer", "staff")
         self.dojo.add_person("Samus Aran", "fellow")
         self.dojo.add_person("Christianne Ochieng", "fellow")
-        self.dojo.delete_person(ID)
-        self.assertNotIn(ID, self.dojo.all_people)
+        self.dojo.delete_person("ID")
+        self.assertNotIn("ID", self.dojo.all_people)
+
 
 class TestMembersOfRooms(unittest.TestCase):
     def setUp(self):
@@ -176,6 +177,7 @@ class TestDatabase(unittest.TestCase):
         self.dojo.add_person("Androxus Godslayer", "staff")
         self.dojo.add_person("Samus Aran", "fellow")
         self.dojo.add_person("Christianne Ochieng", "fellow")
+        self.dojo.save_to_db("allocation.db")
 
     def tearDown(self):
         self.dojo = Dojo()
@@ -185,12 +187,16 @@ class TestDatabase(unittest.TestCase):
         self.dojo.add_person("Christianne Ochieng", "fellow")
 
     def test_save_to_db(self):
-        self.dojo.save_to_db("allocation.db")
         self.assertTrue(os.path.exists, "./db/allocation.db")
 
     def test_db_exists_for_loading(self):
         self.dojo.load_db("allocation.db")
         self.assertTrue(os.path.exists, "./db/allocation.db")
+
+    def test_load_correct_file(self):
+        file_name = "sway.docx"
+        self.dojo.load_db(file_name)
+        self.assertTrue(file_name[-2:], "db")
 
 
 if __name__ == '__main__':
