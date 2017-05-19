@@ -1,5 +1,6 @@
 import unittest
 from Dojo_class import Dojo
+import os
 
 
 class TestCreateRoom(unittest.TestCase):
@@ -171,15 +172,25 @@ class TestLoadPeople(unittest.TestCase):
 class TestDatabase(unittest.TestCase):
     def setUp(self):
         self.dojo = Dojo()
+        self.dojo.create_room("office", ["Overwatch"])
+        self.dojo.add_person("Androxus Godslayer", "staff")
+        self.dojo.add_person("Samus Aran", "fellow")
+        self.dojo.add_person("Christianne Ochieng", "fellow")
 
     def tearDown(self):
         self.dojo = Dojo()
+        self.dojo.create_room("office", ["Overwatch"])
+        self.dojo.add_person("Androxus Godslayer", "staff")
+        self.dojo.add_person("Samus Aran", "fellow")
+        self.dojo.add_person("Christianne Ochieng", "fellow")
 
     def test_save_to_db(self):
-        pass
+        self.dojo.save_to_db("allocation.db")
+        self.assertTrue(os.path.exists, "./db/allocation.db")
 
-    def test_load_from_db(self):
-        pass
+    def test_db_exists_for_loading(self):
+        self.dojo.load_db("allocation.db")
+        self.assertTrue(os.path.exists, "./db/allocation.db")    
 
 
 if __name__ == '__main__':
