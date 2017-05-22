@@ -70,7 +70,7 @@ class TestAddPerson(unittest.TestCase):
         self.test_case_instance.create_room("office", ["Paladins"])
         self.test_case_instance.add_person("General", "Shephard", "fellow", "Y")
         # print(self.test_case_instance.all_people)
-        self.assertIn(self.test_case_instance.all_people[0].office_assigned, self.test_case_instance.all_rooms "Person hasn't been assigned an office")
+        self.assertIn(self.test_case_instance.all_people[0].office_assigned, self.test_case_instance.all_rooms, "Person hasn't been assigned an office")
         self.assertIn(self.test_case_instance.all_people[0].livingspace_assigned, self.test_case_instance.all_rooms, "Person hasn't been assigned a living-space")
 
 
