@@ -105,27 +105,20 @@ class Dojo(object):
     def print_allocations(self, option_to_txt_file=""):
         """This prints out to the console or to a text file all the active
             allocations within the system"""
-        i = 0  # creation of termination factor for loop
-        count = (len(self.all_rooms)) - 1
-        if option_to_txt_file == "":
-            while i < count:
-                if len(self.all_rooms[i].occupants) > 0:
-                    print(self.all_rooms[i].room_name)
-                    i += 1
-                    x = 0  # creation of termination factor for loop
-                    count2 = (len(self.all_rooms)) - 1
-                    while x < count2:
-                        print(self.all_rooms[i].occupants.person_first_name)
-                        x += 1
+        allocation_output = ""
+        if len(self.all_rooms) == 0:
+            print("Unfortunately, there are no existing rooms to be printed")
         else:
-            output_txt = open(option_to_txt_file, mode='w+')
-            while i < count:
-                if len(self.all_rooms[i].occupants) > 0:
-                    output_txt.write(self.all_rooms[i].room_name)
-                    i += 1
-                    x = 0  # creation of termination factor for loop
-                    count2 = (len(self.all_rooms)) - 1
-                    while x < count2:
-                        output_txt.write(self.all_rooms[i].occupants.person_first_name)
-                        x += 1
-            output_txt.close()
+            for room in self.all_rooms:
+                if len(room.occupants) > 0:
+                    allocation_output += ("\n\n" + room.room_name + "---" + room.room_type)
+                    allocation_output += ("\n" + % * 25 + "\n")
+                    for occupants in room.occupants:
+                        allocation_output += (occupants.person_first_name + " " + occupants.person_second_name + ", ")
+            if option_to_txt_file == "":
+                print(allocation_output)
+            else:
+                output_txt_file = open(option_to_txt_file + ".txt", "w+")
+                output_txt_file.write(allocation_output)
+                output_txt_file.close()
+                print("The allocation data has been written to " + option_to_txt_file + ".txt")
