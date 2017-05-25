@@ -5,3 +5,4 @@ Dojo_allocation/
 *.pyc
 .DS_Store
 .coverage
+*.txt
