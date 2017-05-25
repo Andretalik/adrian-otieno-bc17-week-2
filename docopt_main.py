@@ -8,8 +8,9 @@ This example uses docopt with the built in cmd module to demonstrate an
 interactive command application.
 Usage:
     dojo create_room <room_type> <room_name>...
-    dojo add_person <person_name> <person_type> [<wants_accommodation='N'>]
+    dojo add_person <person_first_name> <person_second_name> <person_type> [<wants_accommodation='N'>]
     dojo print_room <room_name>
+    print_allocations [<txt_file_name>]
     dojo (-i | --interactive)
     dojo (-h | --help)
 Options:
@@ -19,6 +20,7 @@ Options:
     -h, --help  Show this screen and exit.
     <room_type>  Type of room - office or living space
     <room_name>  Name of the room
+    <txt_file_name> Name of the text file to be saved
 """
 dojo = Dojo()
 
@@ -74,6 +76,11 @@ class MyInteractive(cmd.Cmd):
     def do_print_room(self, args):
         """Usage: print_room <room_name>"""
         print(dojo.print_room(args['<room_name>']))
+
+    @docopt_cmd
+    def do_print_allocations(self, args):
+        """Usage: print_allocations [<txt_file_name>]"""
+        print(dojo.print_allocations(args['<txt_file_name>']))
 
     def do_quit(self, args):
         exit()
