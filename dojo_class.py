@@ -17,6 +17,7 @@ class Dojo(object):
         self.unallocated_livingspaces = []
 
     def create_room(self, room_type, rooms_to_make):
+        """This creates an office or livngspace for use in the system"""
         if len(rooms_to_make) != 0:
             for room_name in rooms_to_make:
                 if room_type == "office":
@@ -35,6 +36,8 @@ class Dojo(object):
                     return "Incorrect format of room type used. Check help."
 
     def add_person(self, person_first_name, person_second_name, person_type, wants_accomodation="N"):
+        """This adds a person into the system to allow him/her to be allocated
+            a room as required"""
         if person_first_name != "" and person_second_name != "":
             if person_type == "fellow":
                 fellow_instance = Fellow(person_first_name, person_second_name, person_type, wants_accomodation)
@@ -89,6 +92,8 @@ class Dojo(object):
                     self.available_livingspaces.pop(livingspace)
 
     def print_room(self, room_name):
+        """This prints all the people who have been alllocated a specific room by
+           management"""
         for rooms in self.all_rooms:
             if rooms.room_name == room_name:
                 for occupants in rooms.occupants:
@@ -98,6 +103,8 @@ class Dojo(object):
                 print('That room doesn\'t exist')
 
     def print_allocations(self, option_to_txt_file=""):
+        """This prints out to the console or to a text file all the active
+            allocations within the system"""
         i = 0  # creation of termination factor for loop
         count = (len(self.all_rooms)) - 1
         if option_to_txt_file == "":
