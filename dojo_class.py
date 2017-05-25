@@ -121,3 +121,4 @@ class Dojo(object):
                     while x < count2:
                         output_txt.write(self.all_rooms[i].occupants.person_first_name)
                         x += 1
+            output_txt.close()
