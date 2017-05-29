@@ -42,54 +42,59 @@ class Dojo(object):
             if person_type == "fellow":
                 fellow_instance = Fellow(person_first_name, person_second_name, person_type, wants_accomodation)
                 self.all_people.append(fellow_instance)
-                # self.fellows.append(fellow_instance)
                 print("A {} called {} has been created".format(fellow_instance.person_type, fellow_instance.person_first_name))
-
-                if (len(self.available_offices)) == 0:
-                    self.unallocated_offices.append(fellow_instance)
-                    print("{} has been added to the waiting list due to no available rooms".format(fellow_instance.person_first_name))
-                else:
-                    chosen_office_object = random.choice(self.available_offices)
-                    fellow_instance.office_assigned = chosen_office_object
-                    chosen_office_object.occupants.append(fellow_instance)
-                    print("{} has been allocated office {}".format(fellow_instance.person_first_name, fellow_instance.office_assigned.room_name))
-
-                if wants_accomodation == "Y":
-                    if (len(self.available_livingspaces)) == 0:
-                        self.unallocated_livingspaces.append(fellow_instance)
-                    else:
-                        chosen_livingspace_object = random.choice(self.available_livingspaces)
-                        fellow_instance.livingspace_assigned = chosen_livingspace_object
-                        chosen_livingspace_object.occupants.append(fellow_instance)
-                        print("{} has been allocated living space {}".format(fellow_instance.person_first_name, fellow_instance.livingspace_assigned.room_name))
-
+                self.allocate_livingspace
             elif person_type == "staff":
                 staff_instance = Staff(person_first_name, person_second_name, person_type, wants_accomodation)
                 self.all_people.append(staff_instance)
-                # self.staff.append(staff_instance)
                 print("A {} member called {} has been created".format(staff_instance.person_type, staff_instance.person_first_name))
+            self.allocate_office
+        self.room_checker
+        else:
+            return "Please enter the person type in the correct format."
 
-                if (len(self.available_offices)) == 0:
-                    self.unallocated_offices.append(staff_instance)
-                    print("{} has been added to the waiting list due to no available rooms".format(staff_instance.person_first_name))
-                else:
-                    chosen_office_object = random.choice(self.available_offices)
-                    staff_instance.office_assigned = chosen_office_object
-                    chosen_office_object.occupants.append(staff_instance)
-                    print("{} has been allocated office {}".format(staff_instance.person_first_name, staff_instance.office_assigned.room_name))
+
+    def allocate_office(self):
+        if person_type == "fellow":
+            if (len(self.available_offices)) == 0:
+                self.unallocated_offices.append(fellow_instance)
+                print("{} has been added to the waiting list due to no available rooms".format(fellow_instance.person_first_name))
             else:
-                return "Please enter the person type in the correct format."
+                chosen_office_object = random.choice(self.available_offices)
+                fellow_instance.office_assigned = chosen_office_object
+                chosen_office_object.occupants.append(fellow_instance)
+                print("{} has been allocated office {}".format(fellow_instance.person_first_name, fellow_instance.office_assigned.room_name))
+        elif person_type == "staff":
+            if (len(self.available_offices)) == 0:
+                self.unallocated_offices.append(staff_instance)
+                print("{} has been added to the waiting list due to no available rooms".format(staff_instance.person_first_name))
+            else:
+                chosen_office_object = random.choice(self.available_offices)
+                staff_instance.office_assigned = chosen_office_object
+                chosen_office_object.occupants.append(staff_instance)
+                print("{} has been allocated office {}".format(staff_instance.person_first_name, staff_instance.office_assigned.room_name))
 
-            for office in self.available_offices:
-                if len(office.occupants) < office.max_no:
-                    pass
-                else:
-                    self.available_offices.pop(office)
-            for livingspace in self.available_livingspaces:
-                if len(livingspace.occupants) < livingspace.max_no:
-                    pass
-                else:
-                    self.available_livingspaces.pop(livingspace)
+    def allocate_livingspace(self):
+        if wants_accomodation == "Y":
+            if (len(self.available_livingspaces)) == 0:
+                self.unallocated_livingspaces.append(fellow_instance)
+            else:
+                chosen_livingspace_object = random.choice(self.available_livingspaces)
+                fellow_instance.livingspace_assigned = chosen_livingspace_object
+                chosen_livingspace_object.occupants.append(fellow_instance)
+                print("{} has been allocated living space {}".format(fellow_instance.person_first_name, fellow_instance.livingspace_assigned.room_name))
+
+    def room_checker(self):
+        for office in self.available_offices:
+            if len(office.occupants) < office.max_no:
+                pass
+            else:
+                self.available_offices.pop(office)
+        for livingspace in self.available_livingspaces:
+            if len(livingspace.occupants) < livingspace.max_no:
+                pass
+            else:
+                self.available_livingspaces.pop(livingspace)
 
     def print_room(self, room_name):
         """This prints all the people who have been alllocated a specific room by
@@ -112,7 +117,7 @@ class Dojo(object):
             for room in self.all_rooms:
                 if len(room.occupants) > 0:
                     allocation_output += ("\n\n" + room.room_name + "---" + room.room_type)
-                    allocation_output += ("\n" + % * 25 + "\n")
+                    allocation_output += ("\n" + "#" * 50 + "\n")
                     for occupants in room.occupants:
                         allocation_output += (occupants.person_first_name + " " + occupants.person_second_name + ", ")
             if option_to_txt_file == "":
@@ -121,4 +126,4 @@ class Dojo(object):
                 output_txt_file = open(option_to_txt_file + ".txt", "w+")
                 output_txt_file.write(allocation_output)
                 output_txt_file.close()
-                print("The allocation data has been written to " + option_to_txt_file + ".txt")
+                print("The allocation data has been written to " + option_to_txt_file)
