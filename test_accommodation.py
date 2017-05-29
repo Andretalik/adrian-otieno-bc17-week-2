@@ -36,8 +36,8 @@ class TestDeleteRoom(unittest.TestCase):
     def test_room_successfully_deleted(self):
         self.dojo.create_room("livingspace", ["Drangleic", "Rockport", "Camden", "Halo"])
         self.dojo.create_room("office", ["Paladins"])
-        self.dojo.delete_room("office", ["Drangleic"])
-        self.assertNotEqual(self.dojo.all_rooms[0].room_name, "Drangleic")
+        self.dojo.delete_room(["Drangleic"])
+        self.assertNotIn("Drangleic", self.all_rooms)
 
 class TestAddPerson(unittest.TestCase):
     def setUp(self):
@@ -47,10 +47,10 @@ class TestAddPerson(unittest.TestCase):
         self.test_case_instance = Dojo()
 
     def test_add_person_fellow_successful(self):
-        test_instance_person_add = Dojo()
-        initial_person_count = len(test_instance_person_add.all_people)
-        test_instance_person_add.add_person("Adrian", "Otieno", "fellow", "Y")
-        final_person_count = len(test_instance_person_add.all_people)
+        test_instance_person_add_fellow = Dojo()
+        initial_person_count = len(test_instance_person_add_fellow.all_people)
+        test_instance_person_add_fellow.add_person("Adrian", "Otieno", "fellow", "Y")
+        final_person_count = len(test_instance_person_add_fellow.all_people)
         self.assertEqual(final_person_count - initial_person_count, 1, 'The person has not been added')
 
     def test_add_person_staff_successful(self):
