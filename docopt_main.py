@@ -11,6 +11,7 @@ Usage:
     dojo add_person <person_first_name> <person_second_name> <person_type> [<wants_accommodation='N'>]
     dojo print_room <room_name>
     print_allocations [<txt_file_name>]
+    print_unallocated [<txt_file_name>]
     dojo (-i | --interactive)
     dojo (-h | --help)
 Options:
@@ -81,6 +82,11 @@ class MyInteractive(cmd.Cmd):
     def do_print_allocations(self, args):
         """Usage: print_allocations [<txt_file_name>]"""
         print(dojo.print_allocations(args['<txt_file_name>']))
+
+    @docopt_cmd
+    def do_print_unallocated(self,args):
+        """Usage: print_unallocations [<txt_file_name>]"""
+        print(dojo.print_unallocated(args['<txt_file_name>']))
 
     def do_quit(self, args):
         exit()
