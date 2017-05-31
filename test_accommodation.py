@@ -121,6 +121,7 @@ class TestAllocationPrintout(unittest.TestCase):
         self.dojo.print_allocations("Allocations.txt")
         allocations_file = open("Allocations.txt", "r")
         self.assertIn("Androxus Godslayer", allocations_file)
+        allocations_file.close()
 
 
 class TestPrintUnallocated(unittest.TestCase):
@@ -137,6 +138,7 @@ class TestPrintUnallocated(unittest.TestCase):
         self.dojo.print_unallocated("Unallocated.txt")
         unallocated_file = open("Unallocated.txt", "r")
         self.assertIn("Samus Aran", unallocated_file)
+        unallocated_file.close()
 
 
 class TestReallocation(unittest.TestCase):
