@@ -66,27 +66,27 @@ class MyInteractive(cmd.Cmd):
     @docopt_cmd
     def do_create_room(self, args):
         """Usage: create_room <room_type> <room_name>..."""
-        print(dojo.create_room(args['<room_type>'], args['<room_name>']))
+        dojo.create_room(args['<room_type>'], args['<room_name>'])
 
     @docopt_cmd
     def do_add_person(self, args):
         """Usage: add_person <person_first_name> <person_second_name> <person_type> [<wants_accommodation>]"""
-        print(dojo.add_person(args['<person_first_name>'], args['<person_second_name>'], args['<person_type>'], args['<wants_accommodation>']))
+        dojo.add_person(args['<person_first_name>'], args['<person_second_name>'], args['<person_type>'], args['<wants_accommodation>'])
 
     @docopt_cmd
     def do_print_room(self, args):
         """Usage: print_room <room_name>"""
-        print(dojo.print_room(args['<room_name>']))
+        dojo.print_room(args['<room_name>'])
 
     @docopt_cmd
     def do_print_allocations(self, args):
         """Usage: print_allocations [<txt_file_name>]"""
-        print(dojo.print_allocations(args['<txt_file_name>']))
+        dojo.print_allocations(args['<txt_file_name>'])
 
     @docopt_cmd
     def do_print_unallocated(self,args):
         """Usage: print_unallocations [<txt_file_name>]"""
-        print(dojo.print_unallocated(args['<txt_file_name>']))
+        dojo.print_unallocated(args['<txt_file_name>'])
 
     def do_quit(self, args):
         exit()
