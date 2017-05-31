@@ -149,4 +149,3 @@ class Dojo(object):
                     txt_file_unallocated.write(unallocated_output)
                     txt_file_unallocated.close()
                     return "The data concerning unallocated people has been written to {}".format(option_to_txt_file)
-    def reallocate_person(self, ID, room_name):
