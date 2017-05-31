@@ -50,6 +50,7 @@ class Dojo(object):
             return "Please enter the person's details in the correct format."
 
     def allocate_office(self):
+        """This function allocates the person created an office to work in"""
         for person in self.all_people:
             if person.person_type == "fellow":
                 if (len(self.available_offices)) == 0:
@@ -71,6 +72,7 @@ class Dojo(object):
                     print("{} has been allocated office {}".format(person.person_first_name, person.office_assigned.room_name))
 
     def allocate_livingspace(self):
+        """This function allocates the fellow created a livingspace"""
         for person in self.all_people:
             if isinstance(person, Fellow):
                 if person.wants_accommodation == "Y":
@@ -83,6 +85,8 @@ class Dojo(object):
                         print("{} has been allocated living space {}".format(person.person_first_name, person.livingspace_assigned.room_name))
 
     def room_checker(self):
+        """This function updates the list of available rooms on the basis of
+        the number of people in the said rooms"""
         for office in self.available_offices:
             if len(office.occupants) < office.max_no:
                 pass
@@ -102,8 +106,7 @@ class Dojo(object):
                 for occupants in rooms.occupants:
                     print(occupants.person_first_name)
             else:
-                print(self.all_rooms[0].room_name)
-                print('That room doesn\'t exist')
+                print(self.all_rooms[0].room_name + '\n That room doesn\'t exist')
 
     def print_allocations(self, option_to_txt_file=""):
         """This prints out to the console or to a text file all the active
@@ -119,12 +122,12 @@ class Dojo(object):
                     for occupants in room.occupants:
                         allocation_output += (occupants.person_first_name + " " + occupants.person_second_name + ", ")
             if option_to_txt_file == "":
-                print(allocation_output)
+                return allocation_output
             else:
                 output_txt_file = open(option_to_txt_file + ".txt", "w+")
                 output_txt_file.write(allocation_output)
                 output_txt_file.close()
-                print("The allocation data has been written to " + option_to_txt_file)
+                return "The allocation data has been written to " + option_to_txt_file
 
     def print_unallocated(self, option_to_txt_file=""):
         """This prints out to the console or to a text file all the
@@ -146,3 +149,4 @@ class Dojo(object):
                     txt_file_unallocated.write(unallocated_output)
                     txt_file_unallocated.close()
                     return "The data concerning unallocated people has been written to {}".format(option_to_txt_file)
+    def reallocate_person(self, ID, room_name):
