@@ -2,35 +2,35 @@ import unittest
 from dojo_class import Dojo
 import os
 
-
-class TestCreateRoom(unittest.TestCase):
-    def test_create_one_room_successful(self):
-        test_instance_one_room = Dojo()
-        initial_rooms_count = len(test_instance_one_room.all_rooms)
-        test_instance_one_room.create_room("livingspace", ["Drangleic"])
-        final_rooms_count = len(test_instance_one_room.all_rooms)
-        self.assertEqual(final_rooms_count - initial_rooms_count, 1, 'The room has not been created')
-
-    def test_create_multiple_rooms(self):
-        test_instance_multiple_rooms = Dojo()
-        initial_rooms_count = len(test_instance_multiple_rooms.all_rooms)
-        test_instance_multiple_rooms.create_room("livingspace", ["Drangleic", "Rockport", "Camden", "Halo"])
-        self.assertEqual(test_instance_multiple_rooms.all_rooms[0].room_name, "Drangleic", "The rooms have not been created")
-        self.assertEqual(test_instance_multiple_rooms.all_rooms[2].room_name, "Camden", "The rooms have not been created")
-        final_rooms_count = len(test_instance_multiple_rooms.all_rooms)
-        self.assertEqual(final_rooms_count - initial_rooms_count, 4, "Multiple rooms were not created")
-
-    def test_wrong_syntax_create_room(self):
-        test_instance_wrong_syntax_room = Dojo()
-        testing = test_instance_wrong_syntax_room.create_room("sleepingarea", "Son Goku")
-        self.assertEqual(testing, "Incorrect format of room type used. Check help.", msg="Program broken by syntax error in create_room method.")
+#
+# class TestCreateRoom(unittest.TestCase):
+#     def setUp(self):
+#         self.dojo = Dojo()
+#
+#     def test_create_one_room_successful(self):
+#         test_instance_one_room = Dojo()
+#         initial_rooms_count = len(test_instance_one_room.all_rooms)
+#         test_instance_one_room.create_room("livingspace", ["Drangleic"])
+#         final_rooms_count = len(test_instance_one_room.all_rooms)
+#         self.assertEqual(final_rooms_count - initial_rooms_count, 1, 'The room has not been created')
+#
+#     def test_create_multiple_rooms(self):
+#         test_instance_multiple_rooms = Dojo()
+#         initial_rooms_count = len(test_instance_multiple_rooms.all_rooms)
+#         test_instance_multiple_rooms.create_room("livingspace", ["Drangleic", "Rockport", "Camden", "Halo"])
+#         self.assertEqual(test_instance_multiple_rooms.all_rooms[0].room_name, "Drangleic", "The rooms have not been created")
+#         self.assertEqual(test_instance_multiple_rooms.all_rooms[2].room_name, "Camden", "The rooms have not been created")
+#         final_rooms_count = len(test_instance_multiple_rooms.all_rooms)
+#         self.assertEqual(final_rooms_count - initial_rooms_count, 4, "Multiple rooms were not created")
+#
+#     def test_wrong_syntax_create_room(self):
+#         test_instance_wrong_syntax_room = Dojo()
+#         testing = test_instance_wrong_syntax_room.create_room("sleepingarea", "Son Goku")
+#         self.assertEqual(testing, "Incorrect format of room type used. Check help.", msg="Program broken by syntax error in create_room method.")
 
 
 class TestDeleteRoom(unittest.TestCase):
     def setUp(self):
-        self.dojo = Dojo()
-
-    def tearDown(self):
         self.dojo = Dojo()
 
     def test_room_successfully_deleted(self):
@@ -41,9 +41,6 @@ class TestDeleteRoom(unittest.TestCase):
 
 class TestAddPerson(unittest.TestCase):
     def setUp(self):
-        self.test_case_instance = Dojo()
-
-    def tearDown(self):
         self.test_case_instance = Dojo()
 
     def test_add_person_fellow_successful(self):
@@ -77,9 +74,6 @@ class TestDeletePerson(unittest.TestCase):
     def setUp(self):
         self.dojo = Dojo()
 
-    def tearDown(self):
-        self.dojo = Dojo()
-
     def test_if_person_deleted(self):
         self.dojo.create_room("office", ["Overwatch"])
         self.dojo.add_person("Androxus", "Godslayer", "staff")
@@ -91,9 +85,6 @@ class TestDeletePerson(unittest.TestCase):
 
 class TestMembersOfRooms(unittest.TestCase):
     def setUp(self):
-        self.dojo = Dojo()
-
-    def tearDown(self):
         self.dojo = Dojo()
 
     def test_member_in_specific_rooms(self):
@@ -108,9 +99,6 @@ class TestMembersOfRooms(unittest.TestCase):
 
 class TestAllocationPrintout(unittest.TestCase):
     def setUp(self):
-        self.dojo = Dojo()
-
-    def tearDown(self):
         self.dojo = Dojo()
 
     def test_created_textfile(self):
@@ -128,9 +116,6 @@ class TestPrintUnallocated(unittest.TestCase):
     def setUp(self):
         self.dojo = Dojo()
 
-    def tearDown(self):
-        self.dojo = Dojo()
-
     def test_unallocated_people_printed(self):
         self.dojo.add_person("Androxus", "Godslayer", "staff")
         self.dojo.add_person("Samus", "Aran", "fellow")
@@ -144,23 +129,18 @@ class TestPrintUnallocated(unittest.TestCase):
 class TestReallocation(unittest.TestCase):
     def setUp(self):
         self.dojo = Dojo()
-
-    def tearDown(self):
-        self.dojo = Dojo()
-
-    def test_person_reallocated(self):
         self.dojo.create_room("office", ["Lenovo"])
         self.dojo.add_person("Androxus", "Godslayer", "staff")
         self.dojo.create_room("office", ["Lamar", "Risque"])
-        self.dojo.reallocate_person("ID", "Risque")
-        self.assertEqual(self.all_people[0].office_assigned, "Risque")
+
+    def test_person_reallocated(self):
+        self.dojo.reallocate_person("1", "Risque")
+        print("yaay  i ran")
+        self.assertEqual(self.dojo.all_people[0].office_assigned.room_name, "Risque")
 
 
 class TestLoadPeople(unittest.TestCase):
     def setUp(self):
-        self.dojo = Dojo()
-
-    def tearDown(self):
         self.dojo = Dojo()
 
     def test_loading_people(self):
@@ -179,13 +159,6 @@ class TestDatabase(unittest.TestCase):
         self.dojo.add_person("Samus", "Aran", "fellow")
         self.dojo.add_person("Christianne", "Ochieng", "fellow")
         self.dojo.save_to_db("allocation.db")
-
-    def tearDown(self):
-        self.dojo = Dojo()
-        self.dojo.create_room("office", ["Overwatch"])
-        self.dojo.add_person("Androxus", "Godslayer", "staff")
-        self.dojo.add_person("Samus", "Aran", "fellow")
-        self.dojo.add_person("Christianne", "Ochieng", "fellow")
 
     def test_save_to_db(self):
         self.assertTrue(os.path.exists, "./db/allocation.db")
