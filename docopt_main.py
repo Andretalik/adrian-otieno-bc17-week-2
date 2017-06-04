@@ -63,7 +63,6 @@ class MyInteractive(cmd.Cmd):
     @docopt_cmd
     def do_create_room(self, args):
         """Usage: create_room <room_type> <room_name>..."""
-        print(type(args))
         self.dojo.create_room(args['<room_type>'], args['<room_name>'])
 
     @docopt_cmd
@@ -91,7 +90,7 @@ class MyInteractive(cmd.Cmd):
         """Usage: reallocate_person <ID> <room_name>"""
         self.dojo.reallocate_person(args['<ID>'], args['<room_name>'])
 
-    @docopt_cmd
+    # @docopt_cmd
     def do_quit(self, args):
         exit()
 
