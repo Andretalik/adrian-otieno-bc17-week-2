@@ -69,7 +69,7 @@ class MyInteractive(cmd.Cmd):
     @docopt_cmd
     def do_add_person(self, args):
         """Usage: add_person <person_first_name> <person_second_name> <person_type> [<wants_accommodation>]"""
-        self.dojo.add_person(args['<person_first_name>'], args['<person_second_name>'], args['<person_type>'], args['<wants_accommodation>'])
+        self.dojo.add_person(args['<person_first_name>'].title(), args['<person_second_name>'].title(), args['<person_type>'].lower(), args['<wants_accommodation>'])
 
     @docopt_cmd
     def do_print_room(self, args):
