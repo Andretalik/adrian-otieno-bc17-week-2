@@ -59,8 +59,7 @@ class Dojo(object):
                 self.allocate_office(person_instance)
                 self.room_checker()
             else:
-                print("Person's name only accepts letters and not special\
-                      characters or numbers")
+                print("Person's name only accepts letters and not special characters or numbers")
                 return "Incorrect format of person name"
         else:
             print("Please enter the person's details in the correct format.")
@@ -125,12 +124,13 @@ class Dojo(object):
                     if rooms.room_name == room_name:
                         if len(rooms.occupants) > 0:
                             for occupants in rooms.occupants:
-                                print(occupants.person_first_name, " ", occupants.person_second_name)
+                                print(occupants.person_first_name, " ", occupants.person_second_name, "   ")
                         else:
                             print("\n", "\t", room_name, "\n")
                             print("No occupants at the moment.")
                     else:
-                        print(room_name + '\n That room doesn\'t exist')
+                        print("\n", "\t", room_name, "\n")
+                        print("This room does not exist, hence no occupants.")
         else:
             print("No room name has special characters.")
             return "Invalid. Special characters used."
@@ -138,68 +138,60 @@ class Dojo(object):
     def print_allocations(self, option_to_txt_file=None):
         """This prints out to the console or to a text file all the active
             allocations within the system"""
-        if option_to_txt_file.isalphanum():
-            allocation_output = ""
-            if len(self.all_rooms) == 0:
-                print("Unfortunately, there are no existing rooms to be printed")
-            else:
-                for room in self.all_rooms:
-                    if len(room.occupants) > 0:
-                        allocation_output += ("\n\n" + room.room_name + "---" + room.room_type)
-                        allocation_output += ("\n" + "#" * 50 + "\n")
-                        for occupants in room.occupants:
-                            allocation_output += (occupants.person_first_name + " " + occupants.person_second_name + ", ")
-                if option_to_txt_file is None:
-                    print(allocation_output)
-                    return allocation_output
-                else:
-                    output_txt_file = open(option_to_txt_file + ".txt", "w+")
-                    output_txt_file.write(allocation_output)
-                    output_txt_file.close()
-                    print( "The allocation data has been written to " + option_to_txt_file)
-                    return "The allocation data has been written to " + option_to_txt_file
+        allocation_output = ""
+        if len(self.all_rooms) == 0:
+            print("Unfortunately, there are no existing rooms to be printed")
         else:
-            print("The filename must consist letters and/or numbers")
-            return "Invalid. Special characters used."
+            for room in self.all_rooms:
+                if len(room.occupants) > 0:
+                    allocation_output += ("\n\n" + room.room_name + "---" + room.room_type)
+                    allocation_output += ("\n" + "#" * 50 + "\n")
+                    for occupants in room.occupants:
+                        allocation_output += (occupants.person_first_name + " " + occupants.person_second_name + ", ")
+            if option_to_txt_file is None:
+                print(allocation_output)
+                return allocation_output
+            else:
+                output_txt_file = open(option_to_txt_file + ".txt", "w+")
+                output_txt_file.write(allocation_output)
+                output_txt_file.close()
+                print( "The allocation data has been written to " + option_to_txt_file)
+                return "The allocation data has been written to " + option_to_txt_file
 
     def print_unallocated(self, option_to_txt_file=None):
         """This prints out to the console or to a text file all the
             unallocated people within the system"""
-        if option_to_txt_file.isalphanum():
-            unallocated_output = ""
-            if len(self.all_people) == 0:
-                print("No unallocated people, because there are no people in the system.")
-                return "No unallocated people, because there are no people in the system."
-            else:
-                if len(self.unallocated_offices) == 0 and len(self.unallocated_livingspaces) == 0:
-                    print("Everyone has been allocated an office and livingspace. Yay!")
-                    return "Everyone has been allocated an office and livingspace. Yay!"
-                else:
-                    unallocated_output_offices = ""
-                    unallocated_output_livingspaces = ""
-                    unallocated_output_offices += ("\nUnallocated Offices\n")
-                    unallocated_output_offices += ("#" * 50 + "\n")
-                    for person in self.unallocated_offices:
-                        unallocated_output_offices += (person.person_first_name + " " + person.person_second_name, "\t")
-                    unallocated_output_livingspaces += ("\nUnallocated LivingSpaces\n")
-                    unallocated_output_livingspaces += ("#" * 50 + "\n")
-                    for person in self.unallocated_livingspaces:
-                        unallocated_output_livingspaces += (person.person_first_name + " " + person.person_second_name, "\t")
-                    if option_to_txt_file is None:
-                        print(unallocated_output_offices)
-                        print(unallocated_output_livingspaces)
-                        return unallocated_output_offices
-                        return unallocated_output_livingspaces
-                    else:
-                        txt_file_unallocated = open(option_to_txt_file + ".txt", "w+")
-                        txt_file_unallocated.write(unallocated_output_offices)
-                        txt_file_unallocated.write(unallocated_output_livingspaces)
-                        txt_file_unallocated.close()
-                        print("The data concerning unallocated people has been written to {}".format(option_to_txt_file))
-                        return "The data concerning unallocated people has been written to {}".format(option_to_txt_file)
+        unallocated_output = ""
+        if len(self.all_people) == 0:
+            print("No unallocated people, because there are no people in the system.")
+            return "No unallocated people, because there are no people in the system."
         else:
-            print("The filename must consist letters and/or numbers")
-            return "Invalid. Special characters used."
+            if len(self.unallocated_offices) == 0 and len(self.unallocated_livingspaces) == 0:
+                print("Everyone has been allocated an office and livingspace. Yay!")
+                return "Everyone has been allocated an office and livingspace. Yay!"
+            else:
+                unallocated_output_offices = ""
+                unallocated_output_livingspaces = ""
+                unallocated_output_offices += ("\nUnallocated Offices\n")
+                unallocated_output_offices += ("#" * 50 + "\n")
+                for person in self.unallocated_offices:
+                    unallocated_output_offices += (person.person_first_name + " " + person.person_second_name + ",   ")
+                unallocated_output_livingspaces += ("\nUnallocated LivingSpaces\n")
+                unallocated_output_livingspaces += ("#" * 50 + "\n")
+                for person in self.unallocated_livingspaces:
+                    unallocated_output_livingspaces += (person.person_first_name + " " + person.person_second_name + ",   ")
+                if option_to_txt_file is None:
+                    print(unallocated_output_offices)
+                    print(unallocated_output_livingspaces)
+                    return unallocated_output_offices
+                    return unallocated_output_livingspaces
+                else:
+                    txt_file_unallocated = open(option_to_txt_file + ".txt", "w+")
+                    txt_file_unallocated.write(unallocated_output_offices)
+                    txt_file_unallocated.write(unallocated_output_livingspaces)
+                    txt_file_unallocated.close()
+                    print("The data concerning unallocated people has been written to {}".format(option_to_txt_file))
+                    return "The data concerning unallocated people has been written to {}".format(option_to_txt_file)
 
     def deallocation(self, ID, room):
         """This function is a module for the reallocation function: It removes
@@ -250,17 +242,15 @@ class Dojo(object):
                 for line in batch_file:
                     person_details = line.rstrip().split()
                     if len(person_details) == 4:
-                        self.add_person(person_details[0], person_details[1],
-                                        person_details[2], person_details[3])
+                        self.add_person(person_details[0].title(), person_details[1].title(),
+                                        person_details[2].lower(), person_details[3])
                     elif len(person_details) == 3:
-                        self.add_person(person_details[0], person_details[1],
-                                        person_details[2])
+                        self.add_person(person_details[0].title(), person_details[1].title(),
+                                        person_details[2].lower())
 
                     else:
                         print("There is an issue with the target file.")
                         return "There is an issue with the target file."
-                print("All people form file added successfully.")
-                return "All people from file added."
         except (FileNotFoundError, IOError):
             print("The file specified couldn't be found. Please specify the\
                     correct file path.")
