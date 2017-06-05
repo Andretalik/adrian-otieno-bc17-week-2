@@ -22,8 +22,12 @@ class TestCreateRoom(unittest.TestCase):
         self.assertEqual(final_rooms_count - initial_rooms_count, 4, "Multiple rooms were not created")
 
     def test_wrong_syntax_create_room(self):
-        testing = self.dojo.create_room("sleepingarea", "Son Goku")
+        testing = self.dojo.create_room("sleepingarea", ["Son Goku"])
         self.assertEqual(testing, "Incorrect format of room type used. Check help.", msg="Program broken by syntax error in create_room method.")
+
+    def test_special_chars(self):
+        testing_special = self.dojo.create_room("office", ["**@*!&^@%&"])
+        self.assertEqual(testing_special, "Incorrect room name", msg="Program broken by syntax error in create_room method.")
 
 
 class TestAddPerson(unittest.TestCase):
@@ -49,6 +53,10 @@ class TestAddPerson(unittest.TestCase):
         testing = self.dojo.add_person("Kurosaki", "Ichigo", "worker")
         self.assertEqual(testing, "Please enter the person type in the correct format.", msg="Program broken by syntax error in add_person method.")
 
+    def test_names_special_chars(self):
+        testing_names_special = self.dojo.add_person("*(#(&#!))", "#*((#!()))", "fellow", "Y")
+        self.assertEqual(testing_names_special, "Incorrect format of person name", msg="Program broken by syntax error in add_person method")
+
     def test_person_room_allocation(self):
         self.assertIn(self.dojo.all_people[0].office_assigned, self.dojo.all_rooms, "Person hasn't been assigned an office")
         self.assertIn(self.dojo.all_people[0].livingspace_assigned, self.dojo.all_rooms, "Person hasn't been assigned a living-space")
@@ -67,9 +75,7 @@ class TestAllocationPrintout(unittest.TestCase):
 
     def test_created_textfile(self):
         self.dojo.print_allocations("Allocations")
-        allocations_file = open("Allocations.txt", "r")
-        self.assertIn("Androxus Godslayer", allocations_file)
-        allocations_file.close()
+        self.assertTrue(os.path.exists, "*/Unallocated.txt")
 
     def tearDown(self):
         os.remove("Allocations.txt")
@@ -84,9 +90,7 @@ class TestPrintUnallocated(unittest.TestCase):
 
     def test_unallocated_people_printed(self):
         self.dojo.print_unallocated("Unallocated")
-        unallocated_file = open("Unallocated.txt", "r")
-        self.assertIn("Samus Aran", unallocated_file)
-        unallocated_file.close()
+        self.assertTrue(os.path.exists, "*/Unallocated.txt")
 
     def tearDown(self):
         os.remove("Unallocated.txt")
