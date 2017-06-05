@@ -1,4 +1,7 @@
 import random
+import pickle
+import sqlite3
+import os
 from room_class import Office, LivingSpace
 from person_class import Fellow, Staff
 
@@ -37,13 +40,13 @@ class Dojo(object):
                 fellow_instance = Fellow(person_first_name, person_second_name, person_type, wants_accomodation)
                 fellow_instance.identifier = int((len(self.all_people))+1)
                 self.all_people.append(fellow_instance)
-                print("A {} called {} has been created".format(fellow_instance.person_type, fellow_instance.person_first_name))
+                print("A {} called {} has been created\t\t\tID:{}".format(fellow_instance.person_type, fellow_instance.person_first_name, fellow_instance.identifier))
                 self.allocate_livingspace()
             elif person_type == "staff":
                 staff_instance = Staff(person_first_name, person_second_name, person_type)
                 staff_instance.identifier = int((len(self.all_people))+1)
                 self.all_people.append(staff_instance)
-                print("A {} member called {} has been created".format(staff_instance.person_type, staff_instance.person_first_name))
+                print("A {} member called {} has been created\t\t\tID:{}".format(staff_instance.person_type, staff_instance.person_first_name, staff_instance.identifier))
             else:
                 return "Please enter the person type in the correct format."
             self.allocate_office()
@@ -188,3 +191,22 @@ class Dojo(object):
                                             .format(person.person_first_name, person.livingspace_assigned.room_name))
 
         return "The person you want to reallocate does not exist in the system"
+
+    def mass_add_people(self, file_name=""):
+        """This function adds people to the system from a textfile"""
+        try:
+            with open(file_name, "r") as batch_file:
+                for line in batch_file:
+                    person_details = line.rstrip().split()
+                    if len(person_details) == 4:
+                        self.add_person(person_details[0], person_details[1],
+                                        person_details[2], person_details[3])
+                    elif len(person_details) == 3:
+                        self.add_person(person_details[0], person_details[1],
+                                        person_details[2])
+                    else:
+                        return "There is an issue with the target file."
+                return "All people from file added."
+        except (FileNotFoundError, IOError):
+            return "The file specified couldn't be found. Please specify the\
+                    correct file path."

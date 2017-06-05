@@ -66,10 +66,13 @@ class TestAllocationPrintout(unittest.TestCase):
         self.dojo.add_person("Christianne", "Ochieng", "fellow")
 
     def test_created_textfile(self):
-        self.dojo.print_allocations("Allocations.txt")
+        self.dojo.print_allocations("Allocations")
         allocations_file = open("Allocations.txt", "r")
         self.assertIn("Androxus Godslayer", allocations_file)
         allocations_file.close()
+
+    def tearDown(self):
+        os.remove("Allocations.txt")
 
 
 class TestPrintUnallocated(unittest.TestCase):
@@ -80,10 +83,13 @@ class TestPrintUnallocated(unittest.TestCase):
         self.dojo.add_person("Christianne", "Ochieng", "fellow")
 
     def test_unallocated_people_printed(self):
-        self.dojo.print_unallocated("Unallocated.txt")
+        self.dojo.print_unallocated("Unallocated")
         unallocated_file = open("Unallocated.txt", "r")
         self.assertIn("Samus Aran", unallocated_file)
         unallocated_file.close()
+
+    def tearDown(self):
+        os.remove("Unallocated.txt")
 
 
 class TestReallocation(unittest.TestCase):
@@ -101,14 +107,24 @@ class TestReallocation(unittest.TestCase):
 class TestLoadPeople(unittest.TestCase):
     def setUp(self):
         self.dojo = Dojo()
+        self.tst = "OLUWAFEMI SULE FELLOW Y\nDOMINIC WALTERS STAFF\n"
+        self.tst += "SIMON PATTERSON FELLOW Y\nMARI LAWRENCE FELLOW Y\n"
+        self.tst += "LEIGH RILEY STAFF\nTANA LOPEZ FELLOW Y\n"
+        self.tst += "KELLY McGUIRE STAFF\nJOHN DOE FELLOW N\n"
+        self.tst += "ELIZABETH WARREN STAFF\nJANE DOE FELLOW Y\n"
+        self.tst += "ANSLEM OKUMU STAFF\nJULIAN PRINCE FELLOW Y\n"
+        test_file = open("People.txt", "w+")
+        test_file.write(self.tst)
+        test_file.close()
 
     def test_loading_people(self):
-        loaded_file = open("People.txt", "r")
-        initial_people_count = len(self.all_people)
-        self.dojo.add_people(loaded_file)
-        final_person_count = len(self.all_people)
-        self.assertNotEqual(final_person_count - initial_people_count, 0)
-        loaded_file.close()
+        initial_people_count = len(self.dojo.all_people)
+        self.dojo.mass_add_people("People.txt")
+        final_person_count = len(self.dojo.all_people)
+        self.assertNotEqual(final_person_count - initial_people_count, 12)
+
+    def tearDown(self):
+        os.remove("People.txt")
 
 
 class TestDatabase(unittest.TestCase):

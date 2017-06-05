@@ -1,13 +1,14 @@
-"""
+__doc__ = """
 This example uses docopt with the built in cmd module to demonstrate an
 interactive command application.
 Usage:
     dojo create_room <room_type> <room_name>...
     dojo add_person <person_first_name> <person_second_name> <person_type> [<wants_accommodation='N'>]
     dojo print_room <room_name>
-    print_allocations [<txt_file_name>]
-    print_unallocated [<txt_file_name>]
-    reallocate_person <ID> <room_name>
+    dojo print_allocations [<txt_file_name>]
+    dojo print_unallocated [<txt_file_name>]
+    dojo reallocate_person <ID> <room_name>
+    dojo mass_add_people <txt_file_name>
     dojo (-i | --interactive)
     dojo (-h | --help)
 Options:
@@ -90,8 +91,13 @@ class MyInteractive(cmd.Cmd):
         """Usage: reallocate_person <ID> <room_name>"""
         self.dojo.reallocate_person(args['<ID>'], args['<room_name>'])
 
-    # @docopt_cmd
+    @docopt_cmd
+    def do_mass_add_people(self, args):
+        """Usage: mass_add_people <file_name>"""
+        self.dojo.mass_add_people(args['<file_name>'])
+
     def do_quit(self, args):
+        print("Thank you for using the Dojo Allocation App")
         exit()
 
 
