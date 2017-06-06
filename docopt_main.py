@@ -9,6 +9,7 @@ Usage:
     dojo print_unallocated [<txt_file_name>]
     dojo reallocate_person <ID> <room_name>
     dojo mass_add_people <txt_file_name>
+    dojo save_to_db [<database_name>]
     dojo (-i | --interactive)
     dojo (-h | --help)
 Options:
@@ -95,6 +96,11 @@ class MyInteractive(cmd.Cmd):
     def do_mass_add_people(self, args):
         """Usage: mass_add_people <file_name>"""
         self.dojo.mass_add_people(args['<file_name>'])
+
+    @docopt_cmd
+    def do_save_to_db(self, args):
+        """Usage: save_to_db [<database_name>]"""
+        self.dojo.save_to_db(args['<database_name>'])
 
     def do_quit(self, args):
         print("Thank you for using the Dojo Allocation App")
