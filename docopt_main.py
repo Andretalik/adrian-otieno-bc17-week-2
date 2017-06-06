@@ -10,6 +10,7 @@ Usage:
     dojo reallocate_person <ID> <room_name>
     dojo mass_add_people <txt_file_name>
     dojo save_to_db [<database_name>]
+    dojo load_from_db [<database_name>]
     dojo (-i | --interactive)
     dojo (-h | --help)
 Options:
@@ -101,6 +102,11 @@ class MyInteractive(cmd.Cmd):
     def do_save_to_db(self, args):
         """Usage: save_to_db [<database_name>]"""
         self.dojo.save_to_db(args['<database_name>'])
+
+    @docopt_cmd
+    def do_load_from_db(self, args):
+        """Usage: load_from_db [<database_name>]"""
+        self.dojo.load_from_db(args['<database_name>'])
 
     def do_quit(self, args):
         print("Thank you for using the Dojo Allocation App")
