@@ -22,7 +22,7 @@ class TestCreateRoom(unittest.TestCase):
         self.assertEqual(final_rooms_count - initial_rooms_count, 4, "Multiple rooms were not created")
 
     def test_wrong_syntax_create_room(self):
-        testing = self.dojo.create_room("sleepingarea", ["Son Goku"])
+        testing = self.dojo.create_room("sleepingarea", "Son Goku")
         self.assertEqual(testing, "Incorrect format of room type used. Check help.", msg="Program broken by syntax error in create_room method.")
 
     def test_special_chars(self):
@@ -125,7 +125,7 @@ class TestLoadPeople(unittest.TestCase):
         initial_people_count = len(self.dojo.all_people)
         self.dojo.mass_add_people("People.txt")
         final_person_count = len(self.dojo.all_people)
-        self.assertNotEqual(final_person_count - initial_people_count, 12)
+        self.assertEqual(final_person_count - initial_people_count, 12)
 
     def tearDown(self):
         os.remove("People.txt")
@@ -138,19 +138,25 @@ class TestDatabase(unittest.TestCase):
         self.dojo.add_person("Androxus", "Godslayer", "staff")
         self.dojo.add_person("Samus", "Aran", "fellow")
         self.dojo.add_person("Christianne", "Ochieng", "fellow")
-        self.dojo.save_to_db("allocation.db")
 
     def test_save_to_db(self):
-        self.assertTrue(os.path.exists, "./db/allocation.db")
+        self.assertEqual(self.dojo.save_to_db("allocation"), "Data stored in the allocation.db database")
+
+    def test_save_to_db_special_chars(self):
+        self.assertEqual(self.dojo.save_to_db("#(@&#&*@)"), "Database name can't have special characters.")
 
     def test_db_exists_for_loading(self):
-        self.dojo.load_db("allocation.db")
-        self.assertTrue(os.path.exists, "./db/allocation.db")
+        self.dojo.save_to_db("allocation")
+        outcome = self.dojo.load_db("allocation.db")
+        self.assertEqual(outcome, "Data successfully loaded")
+        self.assertEqual(len(self.all_people), 3)
 
     def test_load_correct_file(self):
-        file_name = "sway.docx"
-        self.dojo.load_db(file_name)
-        self.assertTrue(file_name[-2:], "db")
+        outcome = self.dojo.load_db("sway.docx")
+        self.assertEqual(outcome, "Please check for the correct database name.")
+
+    def tearDown(self):
+        os.remove("allocation.db")
 
 
 if __name__ == '__main__':
