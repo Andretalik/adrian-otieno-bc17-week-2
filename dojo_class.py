@@ -295,7 +295,7 @@ class Dojo(object):
             connected.execute("INSERT OR REPLACE INTO Dojo(Id, all_rooms, all_people, "
                               "unallocated_offices, unallocated_livingspaces) "
                               "VALUES (?, ?, ?, ?, ?);",
-                              (1, all_people_save, all_rooms_save, unallocated_offices_save, unallocated_livingspaces_save))
+                              (1, all_rooms_save, all_people_save, unallocated_offices_save, unallocated_livingspaces_save))
             connected.commit()
             connected.close()
             return_msg = "Data stored in the {} database".format(database_name)
@@ -304,3 +304,43 @@ class Dojo(object):
         else:
             print("Database name can't have special characters.")
             return "Database name can't have special characters."
+
+    def load_from_db(self, database_name="dojo.db"):
+        """This function loads the the objects from the database and refreshes\
+        and refreshes them back into their respective lists for use within the\
+        system."""
+        connected = sqlite3.connect(database_name)
+        cursor = connected.cursor()
+
+        try:
+            cursor.execute("SELECT all_rooms FROM Dojo WHERE Id=1")
+            all_rooms_dmp = cursor.fetchone()
+
+            cursor.execute("SELECT all_people FROM Dojo WHERE Id=1")
+            all_people_dmp = cursor.fetchone()
+
+            cursor.execute("SELECT unallocated_offices FROM Dojo WHERE Id=1")
+            unallocated_offices_dmp = cursor.fetchone()
+
+            cursor.execute("SELECT unallocated_livingspaces FROM Dojo WHERE Id=1")
+            unallocated_livingspaces_dmp = cursor.fetchone()
+
+            connected.close()
+
+            rooms_list = pickle.loads(all_rooms_dmp[0])
+            people_list = pickle.loads(all_people_dmp[0])
+            unallocated_offices_list = pickle.loads(unallocated_offices_dmp[0])
+            unallocated_livingspaces_list = pickle.loads(unallocated_livingspaces_dmp[0])
+
+            self.all_rooms = rooms_list
+            self.all_people = people_list
+            self.unallocated_offices = unallocated_offices_list
+            self.unallocated_livingspaces = unallocated_livingspaces_list
+            status_msg = "Data successfully loaded from {}".format(database_name)
+            print(status_msg)
+            return status_msg
+        except:
+            print("Serious problem encountered while loading from the database\
+                  Kindly crosscheck the name of the database")
+            os.remove(database_name)
+            return "Error while loading from file."
