@@ -156,7 +156,6 @@ class TestDatabase(unittest.TestCase):
     def test_load_correct_file(self):
         outcome = self.dojo.load_from_db("sway.docx")
         self.assertEqual(outcome, "Error while loading from file.")
-        os.remove("sway.docx")
 
 
 if __name__ == '__main__':
