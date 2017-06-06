@@ -125,6 +125,7 @@ class Dojo(object):
                         if len(rooms.occupants) > 0:
                             for occupants in rooms.occupants:
                                 print(occupants.person_first_name, " ", occupants.person_second_name, "   ")
+                            return "Occupants printed."
                         else:
                             print("\n", "\t", room_name, "\n")
                             print("No occupants at the moment.")
@@ -212,25 +213,41 @@ class Dojo(object):
                         if room.room_type == "office":
                             for room in self.available_offices:
                                 if room_name == room.room_name:
-                                    self.deallocation(ID, room)
-                                    room.occupants.append(person)
-                                    person.office_assigned = room
-                                    self.room_checker()
-                                    print("{} has been reallocated to {}"
-                                            .format(person.person_first_name, person.office_assigned.room_name))
-                                    return ("{} has been reallocated to {}"
-                                            .format(person.person_first_name, person.office_assigned.room_name))
+                                    if person.office_assigned.room_type == room.room_type:
+                                        if person in room.occupants:
+                                            print("Cannot reallocate to the same room.")
+                                            return "Cannot reallocate to the same room."
+                                        else:
+                                            self.deallocation(ID, room)
+                                            room.occupants.append(person)
+                                            person.office_assigned = room
+                                            self.room_checker()
+                                            print("{} has been reallocated to {}"
+                                                  .format(person.person_first_name, person.office_assigned.room_name))
+                                            return ("{} has been reallocated to {}"
+                                                    .format(person.person_first_name, person.office_assigned.room_name))
+                                    else:
+                                        print("Reallocation is only from office to office as well as livingspace to livingspace.")
+                                        return "Reallocation is only from office to office as well as livingspace to livingspace."
                         elif room.room_type == "livingspace":
                             for room in self.available_livingspaces:
                                 if room_name == room.room_name:
-                                    self.deallocation(ID, room)
-                                    room.occupants.append(person)
-                                    person.livingspace_assigned = room
-                                    self.room_checker()
-                                    print("{} has been reallocated to {}"
-                                            .format(person.person_first_name, person.livingspace_assigned.room_name))
-                                    return ("{} has been reallocated to {}"
-                                            .format(person.person_first_name, person.livingspace_assigned.room_name))
+                                    if person.office_assigned.room_type == room.room_type:
+                                        if person in room.occupants:
+                                            print("Cannot reallocate to the same room.")
+                                            return "Cannot reallocate to the same room."
+                                        else:
+                                            self.deallocation(ID, room)
+                                            room.occupants.append(person)
+                                            person.livingspace_assigned = room
+                                            self.room_checker()
+                                            print("{} has been reallocated to {}"
+                                                  .format(person.person_first_name, person.livingspace_assigned.room_name))
+                                            return ("{} has been reallocated to {}"
+                                                    .format(person.person_first_name, person.livingspace_assigned.room_name))
+                                    else:
+                                        print("Reallocation is only from office to office as well as livingspace to livingspace.")
+                                        return "Reallocation is only from office to office as well as livingspace to livingspace."
 
         print("The person you want to reallocate does not exist in the system")
         return "The person you want to reallocate does not exist in the system"
@@ -256,30 +273,34 @@ class Dojo(object):
                     correct file path.")
             return "Incorrect path."
 
-    def save_state(self, database_name="dojo_sqlite.db"):
+    def save_to_db(self, database_name):
         """This function saves the objects created in their respective lists\
-        in a databse for future reference"""
-        connected = sqlite3.connect(database_name)
-        connected.execute('''CREATE TABLE IF NOT EXISTS Dojo(ALL_ROOMS text
-        ALL_PEOPLE text UNALLOCATED_OFFICES text UNALLOCATED_LIVINGSPACES text)
-        ;''')
-        connected.close()
+        in a database for future reference"""
+        if database_name is None:
+            database_name = "dojo"
+        if database_name.isalpha():
+            database_name = database_name + ".db"
+            connected = sqlite3.connect(database_name)
+            connected.execute('''CREATE TABLE IF NOT EXISTS Dojo (
+            Id INTEGER, all_rooms TEXT, all_people TEXT, unallocated_offices TEXT,
+            unallocated_livingspaces TEXT);''')
+            connected.close()
 
-        # conversion of list vars to string for storage
-        all_rooms_str = pickle.dumps(self.all_rooms)
-        all_people_str = pickle.dumps(self.all_people)
-        unallocated_offices_str = pickle.dumps(self.unallocated_offices)
-        unallocated_livingspaces_str = \
-            pickle.dumps(self.unallocated_livingspaces)
-        connected = sqlite3.connect(database_name)
-        connected.execute("INSERT OR REPLACE INTO Dojo(ALL_ROOMS, ALL_PEOPLE, "
-                          "UNALLOCATED_OFFICES, UNALLOCATED_LIVINGSPACES) "
-                          "VALUES (?, ?, ?, ?);"
-                          (all_people_str, all_rooms_str,
-                           unallocated_offices_str,
-                           unallocated_livingspaces_str))
-        connected.commit()
-        connected.close()
-        return_msg = "Data stored in the {} database".format(database_name)
-        print(return_msg)
-        return return_msg
+            # conversion of list variables to strings for storage
+            all_rooms_save = pickle.dumps(self.all_rooms)
+            all_people_save = pickle.dumps(self.all_people)
+            unallocated_offices_save = pickle.dumps(self.unallocated_offices)
+            unallocated_livingspaces_save = pickle.dumps(self.unallocated_livingspaces)
+            connected = sqlite3.connect(database_name)
+            connected.execute("INSERT OR REPLACE INTO Dojo(Id, all_rooms, all_people, "
+                              "unallocated_offices, unallocated_livingspaces) "
+                              "VALUES (?, ?, ?, ?, ?);",
+                              (1, all_people_save, all_rooms_save, unallocated_offices_save, unallocated_livingspaces_save))
+            connected.commit()
+            connected.close()
+            return_msg = "Data stored in the {} database".format(database_name)
+            print(return_msg)
+            return return_msg
+        else:
+            print("Database name can't have special characters.")
+            return "Database name can't have special characters."
