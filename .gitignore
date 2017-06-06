@@ -7,3 +7,4 @@ Dojo_allocation/
 .coverage
 *.txt
 test_files/
+*.db
