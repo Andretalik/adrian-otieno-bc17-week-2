@@ -141,22 +141,22 @@ class TestDatabase(unittest.TestCase):
 
     def test_save_to_db(self):
         self.assertEqual(self.dojo.save_to_db("allocation"), "Data stored in the allocation.db database")
+        os.remove("allocation.db")
 
     def test_save_to_db_special_chars(self):
         self.assertEqual(self.dojo.save_to_db("#(@&#&*@)"), "Database name can't have special characters.")
 
     def test_db_exists_for_loading(self):
         self.dojo.save_to_db("allocation")
-        outcome = self.dojo.load_db("allocation.db")
-        self.assertEqual(outcome, "Data successfully loaded")
-        self.assertEqual(len(self.all_people), 3)
+        outcome = self.dojo.load_from_db("allocation.db")
+        self.assertEqual(outcome, "Data successfully loaded from allocation.db")
+        self.assertEqual(len(self.dojo.all_people), 3)
+        os.remove("allocation.db")
 
     def test_load_correct_file(self):
-        outcome = self.dojo.load_db("sway.docx")
-        self.assertEqual(outcome, "Please check for the correct database name.")
-
-    def tearDown(self):
-        os.remove("allocation.db")
+        outcome = self.dojo.load_from_db("sway.docx")
+        self.assertEqual(outcome, "Error while loading from file.")
+        os.remove("sway.docx")
 
 
 if __name__ == '__main__':
