@@ -41,6 +41,6 @@ Options:
     -o, --output  Save to a txt file
     -i, --interactive  Interactive Mode
     -h, --help  Show this screen and exit.
-    ```
+```
 
 Go wild and use it as you please. Any feedback as to how I can improve my project is welcomed.
