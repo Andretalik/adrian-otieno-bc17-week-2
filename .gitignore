@@ -6,3 +6,5 @@ Dojo_allocation/
 .DS_Store
 .coverage
 *.txt
+test_files/
+*.db
