@@ -35,11 +35,13 @@ class Dojo(object):
         if person_first_name != "" and person_second_name != "":
             if person_type == "fellow":
                 fellow_instance = Fellow(person_first_name, person_second_name, person_type, wants_accomodation)
+                fellow_instance.identifier = int((len(self.all_people))+1)
                 self.all_people.append(fellow_instance)
                 print("A {} called {} has been created".format(fellow_instance.person_type, fellow_instance.person_first_name))
                 self.allocate_livingspace()
             elif person_type == "staff":
                 staff_instance = Staff(person_first_name, person_second_name, person_type)
+                staff_instance.identifier = int((len(self.all_people))+1)
                 self.all_people.append(staff_instance)
                 print("A {} member called {} has been created".format(staff_instance.person_type, staff_instance.person_first_name))
             else:
@@ -149,3 +151,40 @@ class Dojo(object):
                     txt_file_unallocated.write(unallocated_output)
                     txt_file_unallocated.close()
                     return "The data concerning unallocated people has been written to {}".format(option_to_txt_file)
+
+    def deallocation(self, ID, room):
+        """This function is a module for the reallocation function: It removes
+        the person to be reallocated from the room he was currently allocated
+        to (for offices)"""
+        for person in room.occupants:
+            if ID == person.identifier:
+                room.occupants.remove(person)
+
+    def reallocate_person(self, ID, room_name):
+        """This function reallocates a person to another room using his/her ID
+        to identify him/her"""
+        requested_ID = int(ID)
+        for person in self.all_people:
+            if requested_ID == person.identifier:
+                for room in self.all_rooms:
+                    if room_name == room.room_name:
+                        if room.room_type == "office":
+                            for room in self.available_offices:
+                                if room_name == room.room_name:
+                                    self.deallocation(ID, room)
+                                    room.occupants.append(person)
+                                    person.office_assigned = room
+                                    self.room_checker()
+                                    return ("{} has been reallocated to {}"
+                                            .format(person.person_first_name, person.office_assigned.room_name))
+                        elif room.room_type == "livingspace":
+                            for room in self.available_livingspaces:
+                                if room_name == room.room_name:
+                                    self.deallocation(ID, room)
+                                    room.occupants.append(person)
+                                    person.livingspace_assigned = room
+                                    self.room_checker()
+                                    return ("{} has been reallocated to {}"
+                                            .format(person.person_first_name, person.livingspace_assigned.room_name))
+
+        return "The person you want to reallocate does not exist in the system"

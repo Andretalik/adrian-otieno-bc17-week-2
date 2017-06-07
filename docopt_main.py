@@ -1,9 +1,4 @@
-import sys
-import cmd
-from docopt import docopt, DocoptExit
-from dojo_class import Dojo
-
-__doc__ = """
+"""
 This example uses docopt with the built in cmd module to demonstrate an
 interactive command application.
 Usage:
@@ -12,6 +7,7 @@ Usage:
     dojo print_room <room_name>
     print_allocations [<txt_file_name>]
     print_unallocated [<txt_file_name>]
+    reallocate_person <ID> <room_name>
     dojo (-i | --interactive)
     dojo (-h | --help)
 Options:
@@ -19,11 +15,11 @@ Options:
     -o, --output  Save to a txt file
     -i, --interactive  Interactive Mode
     -h, --help  Show this screen and exit.
-    <room_type>  Type of room - office or living space
-    <room_name>  Name of the room
-    <txt_file_name> Name of the text file to be saved
 """
-dojo = Dojo()
+import sys
+import cmd
+from docopt import docopt, DocoptExit
+from dojo_class import Dojo
 
 
 def docopt_cmd(func):
@@ -60,34 +56,41 @@ def docopt_cmd(func):
 
 class MyInteractive(cmd.Cmd):
 
+    dojo = Dojo()
     prompt = 'Dojo Allocation App >>>'
     file = None
 
     @docopt_cmd
     def do_create_room(self, args):
         """Usage: create_room <room_type> <room_name>..."""
-        dojo.create_room(args['<room_type>'], args['<room_name>'])
+        self.dojo.create_room(args['<room_type>'], args['<room_name>'])
 
     @docopt_cmd
     def do_add_person(self, args):
         """Usage: add_person <person_first_name> <person_second_name> <person_type> [<wants_accommodation>]"""
-        dojo.add_person(args['<person_first_name>'], args['<person_second_name>'], args['<person_type>'], args['<wants_accommodation>'])
+        self.dojo.add_person(args['<person_first_name>'], args['<person_second_name>'], args['<person_type>'], args['<wants_accommodation>'])
 
     @docopt_cmd
     def do_print_room(self, args):
         """Usage: print_room <room_name>"""
-        dojo.print_room(args['<room_name>'])
+        self.dojo.print_room(args['<room_name>'])
 
     @docopt_cmd
     def do_print_allocations(self, args):
         """Usage: print_allocations [<txt_file_name>]"""
-        dojo.print_allocations(args['<txt_file_name>'])
+        self.dojo.print_allocations(args['<txt_file_name>'])
 
     @docopt_cmd
-    def do_print_unallocated(self,args):
+    def do_print_unallocated(self, args):
         """Usage: print_unallocations [<txt_file_name>]"""
-        dojo.print_unallocated(args['<txt_file_name>'])
+        self.dojo.print_unallocated(args['<txt_file_name>'])
 
+    @docopt_cmd
+    def do_reallocate_person(self, args):
+        """Usage: reallocate_person <ID> <room_name>"""
+        self.dojo.reallocate_person(args['<ID>'], args['<room_name>'])
+
+    # @docopt_cmd
     def do_quit(self, args):
         exit()
 

@@ -1,9 +1,7 @@
 class Person(object):
-    Identifier = 0
 
-    def __init__(self, person_first_name, person_second_name, person_type, office_assigned='None'):
-        Person.Identifier += 1
-        self.ID = Person.Identifier
+    def __init__(self, person_first_name, person_second_name, person_type, identifier=0, office_assigned='None'):
+        self.identifier = identifier
         self.person_first_name = person_first_name
         self.person_second_name = person_second_name
         self.person_type = person_type
