@@ -1,5 +1,5 @@
 __doc__ = """
-This example uses docopt with the built in cmd module to demonstrate an
+This project uses docopt with the built in cmd module to be used as an
 interactive command application.
 Usage:
     dojo create_room <room_type> <room_name>...
@@ -21,6 +21,8 @@ Options:
 """
 import sys
 import cmd
+from termcolor import cprint
+from pyfiglet import figlet_format
 from docopt import docopt, DocoptExit
 from dojo_class import Dojo
 
@@ -57,10 +59,23 @@ def docopt_cmd(func):
     return fn
 
 
+def intro():
+    cprint(figlet_format('Dojo Allocation Application', font='slant'),
+           'yellow', attrs=['bold'])
+    print("Welcome to the Dojo Allocation Application! Here is a list of commands to get you started." +
+          " Type 'help' anytime to access available commands")
+    cprint(__doc__, 'green')
+
+
+def leaving():
+    cprint(figlet_format('Later!', font='slant'), 'red', attrs=['bold'])
+
+
 class MyInteractive(cmd.Cmd):
 
+    intro()
     dojo = Dojo()
-    prompt = 'Dojo Allocation App >>>'
+    prompt = 'dojo >>>'
     file = None
 
     @docopt_cmd
@@ -109,7 +124,7 @@ class MyInteractive(cmd.Cmd):
         self.dojo.load_from_db(args['<database_name>'])
 
     def do_quit(self, args):
-        print("Thank you for using the Dojo Allocation App")
+        leaving()
         exit()
 
 
