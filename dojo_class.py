@@ -129,7 +129,7 @@ class Dojo(object):
                             return "Occupants printed."
                         else:
                             print("\n", "\t", room_name, "\n")
-                            print(colored("No occupants at the moment.", "orange"))
+                            print(colored("No occupants at the moment.", "yellow"))
                     else:
                         print("\n", "\t", room_name, "\n")
                         print(colored("\nThis room does not exist, hence no occupants.", "red"))
