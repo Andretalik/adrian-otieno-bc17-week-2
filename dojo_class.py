@@ -125,14 +125,15 @@ class Dojo(object):
                     if rooms.room_name == room_name:
                         if len(rooms.occupants) > 0:
                             for occupants in rooms.occupants:
-                                print(occupants.person_first_name, " ", occupants.person_second_name, "   ")
+                                print(occupants.person_first_name + " " + occupants.person_second_name + "   ")
                             return "Occupants printed."
                         else:
-                            print("\n", "\t", room_name, "\n")
+                            print("\n\t" + room_name + "\n")
                             print(colored("No occupants at the moment.", "yellow"))
-                    else:
-                        print("\n", "\t", room_name, "\n")
-                        print(colored("\nThis room does not exist, hence no occupants.", "red"))
+                            return "No occupants"
+                print("\n\t" + room_name + "\n")
+                print(colored("\nThis room does not exist, hence no occupants.", "red"))
+                return "Room does not exist"
         else:
             print(colored("\nNo room name has special characters.", "red"))
             return "Invalid. Special characters used."
