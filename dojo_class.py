@@ -307,10 +307,12 @@ class Dojo(object):
             print(colored("\nDatabase name can't have special characters.", "red"))
             return "Database name can't have special characters."
 
-    def load_from_db(self, database_name="dojo.db"):
+    def load_from_db(self, database_name):
         """This function loads the the objects from the database and refreshes\
         and refreshes them back into their respective lists for use within the\
         system."""
+        if database_name is None:
+            database_name = "dojo.db"
         connected = sqlite3.connect(database_name)
         cursor = connected.cursor()
 
