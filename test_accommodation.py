@@ -140,7 +140,7 @@ class TestDatabase(unittest.TestCase):
         self.dojo.add_person("Christianne", "Ochieng", "fellow")
 
     def test_save_to_db(self):
-        self.assertEqual(self.dojo.save_to_db("allocation"), "Data stored in the allocation.db database")
+        self.assertEqual(self.dojo.save_to_db("allocation"), "\nData stored in the allocation.db database")
         os.remove("allocation.db")
 
     def test_save_to_db_special_chars(self):
@@ -149,7 +149,7 @@ class TestDatabase(unittest.TestCase):
     def test_db_exists_for_loading(self):
         self.dojo.save_to_db("allocation")
         outcome = self.dojo.load_from_db("allocation.db")
-        self.assertEqual(outcome, "Data successfully loaded from allocation.db")
+        self.assertEqual(outcome, "\nData successfully loaded from allocation.db")
         self.assertEqual(len(self.dojo.all_people), 3)
         os.remove("allocation.db")
 
