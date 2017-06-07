@@ -2,6 +2,7 @@ import random
 import pickle
 import sqlite3
 import os
+from termcolor import colored
 from room_class import Office, LivingSpace
 from person_class import Fellow, Staff
 
@@ -24,17 +25,17 @@ class Dojo(object):
                         office_instance = Office("office", room_name)
                         self.all_rooms.append(office_instance)
                         self.available_offices.append(office_instance)
-                        print("An {} called {} has been created".format(office_instance.room_type, office_instance.room_name))
+                        print(colored("\nAn {} called {} has been created".format(office_instance.room_type, office_instance.room_name), "green"))
                     elif room_type == "livingspace":
                         livingspace_instance = LivingSpace("livingspace", room_name)
                         self.all_rooms.append(livingspace_instance)
                         self.available_livingspaces.append(livingspace_instance)
-                        print("A {} called {} has been created".format(livingspace_instance.room_type, livingspace_instance.room_name))
+                        print(colored("\nA {} called {} has been created".format(livingspace_instance.room_type, livingspace_instance.room_name), "green"))
                     else:
-                        print("Incorrect format of room type used. Check help.")
+                        print(colored("\nIncorrect format of room type used. Check help.", "red"))
                         return "Incorrect format of room type used. Check help."
                 else:
-                    print("Room name cannot have special characters or numbers")
+                    print(colored("\nRoom name cannot have special characters or numbers", "red"))
                     return "Incorrect room name"
 
     def add_person(self, person_first_name, person_second_name, person_type, wants_accomodation="N"):
@@ -46,23 +47,23 @@ class Dojo(object):
                     person_instance = Fellow(person_first_name, person_second_name, person_type, wants_accomodation)
                     person_instance.identifier = int((len(self.all_people))+1)
                     self.all_people.append(person_instance)
-                    print("A {} called {} has been created\t\t\tID:{}".format(person_instance.person_type, person_instance.person_first_name, person_instance.identifier))
+                    print(colored("\nA {} called {} has been created\t\t\tID:{}".format(person_instance.person_type, person_instance.person_first_name, person_instance.identifier), "green"))
                     self.allocate_livingspace(person_instance)
                 elif person_type == "staff":
                     person_instance = Staff(person_first_name, person_second_name, person_type)
                     person_instance.identifier = int((len(self.all_people))+1)
                     self.all_people.append(person_instance)
-                    print("A {} member called {} has been created\t\t\tID:{}".format(person_instance.person_type, person_instance.person_first_name, person_instance.identifier))
+                    print(colored("\nA {} member called {} has been created\t\t\tID:{}".format(person_instance.person_type, person_instance.person_first_name, person_instance.identifier), "green"))
                 else:
-                    print("Please enter the person type in the correct format.")
+                    print(colored("\nPlease enter the person type in the correct format.", "red"))
                     return "Please enter the person type in the correct format."
                 self.allocate_office(person_instance)
                 self.room_checker()
             else:
-                print("Person's name only accepts letters and not special characters or numbers")
+                print(colored("\nPerson's name only accepts letters and not special characters or numbers", "red"))
                 return "Incorrect format of person name"
         else:
-            print("Please enter the person's details in the correct format.")
+            print(colored("\nPlease enter the person's details in the correct format.", "red"))
             return "Please enter the person's details in the correct format."
 
     def allocate_office(self, object_allocate):
@@ -70,21 +71,21 @@ class Dojo(object):
         if object_allocate.person_type == "fellow":
             if (len(self.available_offices)) == 0:
                 self.unallocated_offices.append(object_allocate)
-                print("{} has been added to the waiting list due to no available rooms".format(object_allocate.person_first_name))
+                print(colored("\n{} has been added to the waiting list due to no available rooms".format(object_allocate.person_first_name), "green"))
             else:
                 chosen_office_object = random.choice(self.available_offices)
                 object_allocate.office_assigned = chosen_office_object
                 chosen_office_object.occupants.append(object_allocate)
-                print("{} has been allocated office {}".format(object_allocate.person_first_name, object_allocate.office_assigned.room_name))
+                print(colored("{} has been allocated office {}".format(object_allocate.person_first_name, object_allocate.office_assigned.room_name), "green"))
         elif object_allocate.person_type == "staff":
             if (len(self.available_offices)) == 0:
                 self.unallocated_offices.append(object_allocate)
-                print("{} has been added to the waiting list due to no available rooms".format(object_allocate.person_first_name))
+                print(colored("\n{} has been added to the waiting list due to no available rooms".format(object_allocate.person_first_name), "green"))
             else:
                 chosen_office_object = random.choice(self.available_offices)
                 object_allocate.office_assigned = chosen_office_object
                 chosen_office_object.occupants.append(object_allocate)
-                print("{} has been allocated office {}".format(object_allocate.person_first_name, object_allocate.office_assigned.room_name))
+                print(colored("\n{} has been allocated office {}".format(object_allocate.person_first_name, object_allocate.office_assigned.room_name), "green"))
 
     def allocate_livingspace(self, object_allocate):
         """This function allocates the fellow created a livingspace"""
@@ -96,7 +97,7 @@ class Dojo(object):
                     chosen_livingspace_object = random.choice(self.available_livingspaces)
                     object_allocate.livingspace_assigned = chosen_livingspace_object
                     chosen_livingspace_object.occupants.append(object_allocate)
-                    print("{} has been allocated living space {}".format(object_allocate.person_first_name, object_allocate.livingspace_assigned.room_name))
+                    print(colored("\n{} has been allocated living space {}".format(object_allocate.person_first_name, object_allocate.livingspace_assigned.room_name), "green"))
 
     def room_checker(self):
         """This function updates the list of available rooms on the basis of
@@ -117,7 +118,7 @@ class Dojo(object):
            management"""
         if room_name.isalpha():
             if len(self.all_rooms) == 0:
-                print("There are no existing rooms in the system")
+                print(colored("\nThere are no existing rooms in the system", "red"))
                 return "No existing rooms"
             else:
                 for rooms in self.all_rooms:
@@ -128,12 +129,12 @@ class Dojo(object):
                             return "Occupants printed."
                         else:
                             print("\n", "\t", room_name, "\n")
-                            print("No occupants at the moment.")
+                            print(colored("No occupants at the moment.", "orange"))
                     else:
                         print("\n", "\t", room_name, "\n")
-                        print("This room does not exist, hence no occupants.")
+                        print(colored("\nThis room does not exist, hence no occupants.", "red"))
         else:
-            print("No room name has special characters.")
+            print(colored("\nNo room name has special characters.", "red"))
             return "Invalid. Special characters used."
 
     def print_allocations(self, option_to_txt_file=None):
@@ -141,7 +142,7 @@ class Dojo(object):
             allocations within the system"""
         allocation_output = ""
         if len(self.all_rooms) == 0:
-            print("Unfortunately, there are no existing rooms to be printed")
+            print(colored("\nUnfortunately, there are no existing rooms to be printed", "red"))
         else:
             for room in self.all_rooms:
                 if len(room.occupants) > 0:
@@ -156,19 +157,19 @@ class Dojo(object):
                 output_txt_file = open(option_to_txt_file + ".txt", "w+")
                 output_txt_file.write(allocation_output)
                 output_txt_file.close()
-                print( "The allocation data has been written to " + option_to_txt_file)
-                return "The allocation data has been written to " + option_to_txt_file
+                print(colored("\nThe allocation data has been written to {}".format(option_to_txt_file), "green"))
+                return "The allocation data has been written to {}".format(option_to_txt_file)
 
     def print_unallocated(self, option_to_txt_file=None):
         """This prints out to the console or to a text file all the
             unallocated people within the system"""
         unallocated_output = ""
         if len(self.all_people) == 0:
-            print("No unallocated people, because there are no people in the system.")
+            print(colored("\nNo unallocated people, because there are no people in the system.", "red"))
             return "No unallocated people, because there are no people in the system."
         else:
             if len(self.unallocated_offices) == 0 and len(self.unallocated_livingspaces) == 0:
-                print("Everyone has been allocated an office and livingspace. Yay!")
+                print(colored("\nEveryone has been allocated an office and livingspace. Yay!", "green"))
                 return "Everyone has been allocated an office and livingspace. Yay!"
             else:
                 unallocated_output_offices = ""
@@ -191,7 +192,7 @@ class Dojo(object):
                     txt_file_unallocated.write(unallocated_output_offices)
                     txt_file_unallocated.write(unallocated_output_livingspaces)
                     txt_file_unallocated.close()
-                    print("The data concerning unallocated people has been written to {}".format(option_to_txt_file))
+                    print(colored("\nThe data concerning unallocated people has been written to {}".format(option_to_txt_file), "green"))
                     return "The data concerning unallocated people has been written to {}".format(option_to_txt_file)
 
     def deallocation(self, ID, room):
@@ -215,41 +216,41 @@ class Dojo(object):
                                 if room_name == room.room_name:
                                     if person.office_assigned.room_type == room.room_type:
                                         if person in room.occupants:
-                                            print("Cannot reallocate to the same room.")
+                                            print(colored("\nCannot reallocate to the same room.", "red"))
                                             return "Cannot reallocate to the same room."
                                         else:
                                             self.deallocation(ID, room)
                                             room.occupants.append(person)
                                             person.office_assigned = room
                                             self.room_checker()
-                                            print("{} has been reallocated to {}"
-                                                  .format(person.person_first_name, person.office_assigned.room_name))
+                                            print(colored("\n{} has been reallocated to {}"
+                                                  .format(person.person_first_name, person.office_assigned.room_name), "green"))
                                             return ("{} has been reallocated to {}"
                                                     .format(person.person_first_name, person.office_assigned.room_name))
                                     else:
-                                        print("Reallocation is only from office to office as well as livingspace to livingspace.")
+                                        print(colored("\nReallocation is only from office to office as well as livingspace to livingspace.", "red"))
                                         return "Reallocation is only from office to office as well as livingspace to livingspace."
                         elif room.room_type == "livingspace":
                             for room in self.available_livingspaces:
                                 if room_name == room.room_name:
                                     if person.office_assigned.room_type == room.room_type:
                                         if person in room.occupants:
-                                            print("Cannot reallocate to the same room.")
+                                            print(colored("\nCannot reallocate to the same room.", "red"))
                                             return "Cannot reallocate to the same room."
                                         else:
                                             self.deallocation(ID, room)
                                             room.occupants.append(person)
                                             person.livingspace_assigned = room
                                             self.room_checker()
-                                            print("{} has been reallocated to {}"
-                                                  .format(person.person_first_name, person.livingspace_assigned.room_name))
+                                            print(colored("\n{} has been reallocated to {}"
+                                                  .format(person.person_first_name, person.livingspace_assigned.room_name), "green"))
                                             return ("{} has been reallocated to {}"
                                                     .format(person.person_first_name, person.livingspace_assigned.room_name))
                                     else:
-                                        print("Reallocation is only from office to office as well as livingspace to livingspace.")
+                                        print(colored("\nReallocation is only from office to office as well as livingspace to livingspace.", "red"))
                                         return "Reallocation is only from office to office as well as livingspace to livingspace."
 
-        print("The person you want to reallocate does not exist in the system")
+        print(colored("\nThe person you want to reallocate does not exist in the system", "red"))
         return "The person you want to reallocate does not exist in the system"
 
     def mass_add_people(self, file_name=""):
@@ -266,11 +267,11 @@ class Dojo(object):
                                         person_details[2].lower())
 
                     else:
-                        print("There is an issue with the target file.")
+                        print(colored("\nThere is an issue with the target file.", "red"))
                         return "There is an issue with the target file."
-        except (FileNotFoundError, IOError):
-            print("The file specified couldn't be found. Please specify the\
-                    correct file path.")
+        except:
+            print(colored("\nThe file specified couldn't be found. Please specify the\
+                    correct file path.", "red"))
             return "Incorrect path."
 
     def save_to_db(self, database_name):
@@ -282,7 +283,7 @@ class Dojo(object):
             database_name = database_name + ".db"
             connected = sqlite3.connect(database_name)
             connected.execute('''CREATE TABLE IF NOT EXISTS Dojo (
-            Id INTEGER, all_rooms TEXT, all_people TEXT, unallocated_offices TEXT,
+            Id INTEGER PRIMARY KEY, all_rooms TEXT, all_people TEXT, unallocated_offices TEXT,
             unallocated_livingspaces TEXT);''')
             connected.close()
 
@@ -298,11 +299,11 @@ class Dojo(object):
                               (1, all_rooms_save, all_people_save, unallocated_offices_save, unallocated_livingspaces_save))
             connected.commit()
             connected.close()
-            return_msg = "Data stored in the {} database".format(database_name)
-            print(return_msg)
+            return_msg = "\nData stored in the {} database".format(database_name)
+            print(colored(return_msg, "green"))
             return return_msg
         else:
-            print("Database name can't have special characters.")
+            print(colored("\nDatabase name can't have special characters.", "red"))
             return "Database name can't have special characters."
 
     def load_from_db(self, database_name="dojo.db"):
@@ -336,11 +337,11 @@ class Dojo(object):
             self.all_people = people_list
             self.unallocated_offices = unallocated_offices_list
             self.unallocated_livingspaces = unallocated_livingspaces_list
-            status_msg = "Data successfully loaded from {}".format(database_name)
-            print(status_msg)
+            status_msg = "\nData successfully loaded from {}".format(database_name)
+            print(colored(status_msg, "green"))
             return status_msg
         except:
-            print("Serious problem encountered while loading from the database\
-                  Kindly crosscheck the name of the database")
+            print(colored("\nSerious problem encountered while loading from the database\
+                  Kindly crosscheck the name of the database", "red"))
             os.remove(database_name)
             return "Error while loading from file."
