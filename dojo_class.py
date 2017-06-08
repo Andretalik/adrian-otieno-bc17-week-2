@@ -344,7 +344,6 @@ class Dojo(object):
             print(colored(status_msg, "green"))
             return status_msg
         except:
-            print(colored("\nSerious problem encountered while loading from the database\
-                  Kindly crosscheck the name of the database", "red"))
+            print(colored("\nSerious problem encountered while loading from the database. Kindly crosscheck the name of the database", "red"))
             os.remove(database_name)
             return "Error while loading from file."
