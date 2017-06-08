@@ -1,7 +1,8 @@
 # Dojo Allocation Application
 ---
-[![Build Status](https://travis-ci.org/Andretalik/adrian-otieno-bc17-week-2.svg?branch=test_full_project)](https://travis-ci.org/Andretalik/adrian-otieno-bc17-week-2.svg?branch=test_full_project)
-[![Coverage Status](https://coveralls.io/repos/github/Andretalik/adrian-otieno-bc17-week-2/badge.svg?branch=test_full_project)](https://coveralls.io/github/Andretalik/adrian-otieno-bc17-week-2?branch=test_full_project)
+[![Build Status](https://travis-ci.org/Andretalik/adrian-otieno-bc17-week-2.svg?branch=development)](https://travis-ci.org/Andretalik/adrian-otieno-bc17-week-2.svg?branch=development)
+[![Coverage Status](https://coveralls.io/repos/github/Andretalik/adrian-otieno-bc17-week-2/badge.svg?branch=development)](https://coveralls.io/github/Andretalik/adrian-otieno-bc17-week-2?branch=development)
+[![Code Issues](https://www.quantifiedcode.com/api/v1/project/7bb525c95d53495189c12c300eb2219c/badge.svg)](https://www.quantifiedcode.com/app/project/7bb525c95d53495189c12c300eb2219c)
 ---
 The Dojo Allocation Application is an app designed to ease the maintenance of the system of fellows, staff and the rooms.
 
