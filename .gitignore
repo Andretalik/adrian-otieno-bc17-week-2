@@ -2,3 +2,9 @@ __pycache__/
 Dojo_allocation/
 .cache/
 .idea/
+*.pyc
+.DS_Store
+.coverage
+*.txt
+test_files/
+*.db
