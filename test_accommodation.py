@@ -30,6 +30,24 @@ class TestCreateRoom(unittest.TestCase):
         self.assertEqual(testing_special, "Incorrect room name", msg="Program broken by syntax error in create_room method.")
 
 
+class TestDeleteRoom(unittest.TestCase):
+    def setUp(self):
+        self.dojo = Dojo()
+        self.dojo.create_room("office", ["Paladins"])
+        self.dojo.add_person("Master", "Chief", "staff")
+
+    def test_room_deleted(self):
+        first_roomcount = len(self.dojo.all_rooms)
+        self.dojo.delete_room("Paladins")
+        last_roomcount = len(self.dojo.all_rooms)
+        self.assertEqual(last_roomcount - first_roomcount, 1, msg="Room hasn't been deleted")
+
+    def occupants_unallocated_from_deleted_room(self):
+        self.dojo.delete_room("Paladins")
+        self.assertEqual(self.dojo.all_people[0].office_assigned, None, msg="Person allocated a non-existent room")
+
+
+
 class TestAddPerson(unittest.TestCase):
     def setUp(self):
         self.dojo = Dojo()
